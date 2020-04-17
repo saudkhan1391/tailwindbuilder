@@ -1,88 +1,243 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import Nav from '../components/nav'
+import Sample1, { Sample2 } from '../components/DraggableComponents/sample1'
 
-const Home = () => (
-  <div>
-    <Head>
-      <title>Home</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+import { initialData2 } from "../components/DragLogic/initial_data";
+import Column from "../components/DragLogic/column";
+import { DragDropContext } from "react-beautiful-dnd-next";
+const Home = () => {
+  const [selectedOption, setSelectedOption] = useState("");
+  const menuDetails = (selectedOption) => {
+    // alert("asdfsdf");
+    switch (selectedOption) {
+      case "Navigations":
+        return (<div> <Sample1 title="Navigations" /> <Sample2 /> </div>)
+      case "Headers":
+        return (<div> <Sample1 title="Headers" /> <Sample2 /> </div>)
+      case "Contents":
+        return (<div> <Sample1 title="Contents" /> <Sample2 /> </div>)
+      case "Features":
+        return (<div> <Sample1 title="Features" /> <Sample2 /> </div>)
+      case "How":
+        return (<div> <Sample1 title="How it works ?" /> <Sample2 /> </div>)
+      case "Testimonials":
+        return (<div> <Sample1 title="Testimonials" /> <Sample2 /> </div>)
+      case "Portfolio":
+        return (<div> <Sample1 title="Portfolio" /> <Sample2 /> </div>)
+      case "Team":
+        return (<div> <Sample1 title="Team" /> <Sample2 /> </div>)
+      case "Pricing":
+        return (<div> <Sample1 title="Pricing" /> <Sample2 /> </div>)
+      case "Facts":
+        return (<div> <Sample1 title="Facts" /> <Sample2 /> </div>)
+      case "Contacts":
+        return (<div> <Sample1 title="Contracts" /> <Sample2 /> </div>)
+      case "Footers":
+        return (<div> <Sample1 title="Footers" /> <Sample2 /> </div>)
+      default:
+        // return 
+        return (<div>Null</div>)
+    }
+  }
+  const [initialData, setInitialData] = useState(initialData2);
+  console.log(initialData, "initial data");
+  const onDragEnd = result => {
+    console.log(result, "result 1");
+    const { destination, source, draggableId } = result;
+    if (!destination) {
+      console.log(" ! destination")
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      console.log("destination = source")
+      return;
+    }
 
-    <Nav />
+    const start = initialData.columns[source.droppableId];
+    const finish = initialData.columns[destination.droppableId];
+    if (start === finish) {
+      // const newTaskIds = Array.from(initialData.columns[source.index].rows);
+      const newTaskIds = Array.from(start.taskIds);
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
+      console.log("new task ids : ", newTaskIds)
+      const newColumn = {
+        ...start,
+        taskIds: newTaskIds
+      };
+      console.log("new column", newColumn)
+      const newState = {
+        ...initialData,
+        columns: {
+          ...initialData.columns,
+          [newColumn.id]: newColumn
+        }
+      };
+      setInitialData(newState);
+      console.log("new state of initial data ", newState)
+      return;
+    }
+    const startTaskids = Array.from(start.taskIds);
+    startTaskids.splice(source.index, 1);
+    const newStart = { ...start, taskIds: startTaskids };
 
-    <div className="hero">
-      <h1 className="title">Welcome to Next.js!</h1>
-      <p className="description">
-        To get started, edit <code>pages/index.js</code> and save to reload.
-      </p>
-
-      <div className="row">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Learn more about Next.js in the documentation.</p>
-        </a>
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Next.js Learn &rarr;</h3>
-          <p>Learn about Next.js by following an interactive tutorial!</p>
-        </a>
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Find other example boilerplates on the Next.js GitHub.</p>
-        </a>
+    const finishTaskids = Array.from(finish.taskIds);
+    finishTaskids.splice(destination.index, 0, draggableId);
+    const newFinish = { ...finish, taskIds: finishTaskids };
+    const newState = {
+      ...initialData, columns: {
+        ...initialData.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish
+      }
+    }
+    setInitialData(newState)
+  }
+  const sample = () => {
+    return (
+      <div className="font-bold ">
+        <h1>
+          Sample Component {" "}
+          {selectedOption}
+        </h1>
       </div>
-    </div>
+    )
+  }
+  function draggableComponnents() {
+    const column = initialData.columns["column-1"];
+    const tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
+    return <Column key={column.id} column={column} tasks={tasks} myData={sample} />;
+  }
+  function canvas() {
+    const column = initialData.columns["column-2"];
+    const tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
+    return <Column key={column.id} column={column} tasks={tasks} myData={sample}  />;
+  }
+  return <div>
+    <DragDropContext
+      onDragEnd={result => {
+        onDragEnd(result);
+      }
+      }
+    >
+      <Head>
+        <title>Home</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      {/* <Nav /> */}
+      <div className="md:flex">
+        <div className="sidenav">
+          <a href="#" className="closebtn">&times;</a>
+          <a href="#" style={{ color: "grey" }} >Base</a>
+          <a href="#" onClick={() => { setSelectedOption("Navigations"); }}>Navigations</a>
+          <a href="#" onClick={() => { setSelectedOption("Headers"); }}>Headers</a>
+          <a href="#" onClick={() => { setSelectedOption("Contents"); }}>Contents</a>
+          <a href="#" onClick={() => { setSelectedOption("Features"); }}>Features</a>
+          <a href="#" onClick={() => { setSelectedOption("How"); }}>How it works ?</a>
+          <a href="#" onClick={() => { setSelectedOption("Testimonials"); }}>Testimonials</a>
+          <a href="#" onClick={() => { setSelectedOption("Portfolio"); }}>Portfolio</a>
+          <a href="#" onClick={() => { setSelectedOption("Team"); }}>Team</a>
+          <a href="#" onClick={() => { setSelectedOption("Pricing"); }}>Pricing</a>
+          <a href="#" onClick={() => { setSelectedOption("Facts"); }}>Facts</a>
+          <a href="#" onClick={() => { setSelectedOption("Contacts"); }}>Contacts</a>
+          <a href="#" onClick={() => { setSelectedOption("Footers"); }}>Footers</a>
 
+          <a href="#" style={{ color: "grey", marginTop: 10 }}>Pages</a>
+          <a href="#">Sign In</a>
+          <a href="#">BLog</a>
+          <a href="#">Ecoomerce</a>
+          <a href="#">Admin</a>
+          <a href="#">HTTP Codes</a>
+
+          <a href="#" style={{ color: "grey", marginTop: 10 }}>Utils</a>
+          <a href="#">Cookies</a>
+          <a href="#">Call to action</a>
+          <a href="#">Gallery</a>
+          <a href="#">Grid</a>
+          <a href="#">Pagination</a>
+        </div>
+
+        {selectedOption && <div className="componentsWithMenu">
+          <h5 className="text-center text-grey-100 text-lg mt-5 mb-5">Select a component and drag it to the canvas</h5>
+          {/* {menuDetails(selectedOption)} */}
+          {draggableComponnents()}
+        </div>}
+        <div>
+          {canvas()}
+        </div>
+        {/* <div className="canvas" >
+        <h1 className="text-xl font-bold ml-10"> Canvas</h1>
+        <div className=" border  border-black h-full mt-5">
+        </div>
+      </div> */}
+      </div>
+    </DragDropContext>
     <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        line-height: 1.15;
-        font-size: 48px;
-      }
-      .title,
-      .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 880px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9b9b9b;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
-    `}</style>
+    
+body {
+  font-family: "Lato", sans-serif;
+  background-color: black;
+}
+.canvas{
+  border:solid 1px;
+  border-color: black;
+  width:100%;
+  margin-left:50px;
+  margin-right:50px;
+  margin-top:5px;
+}
+.componentsWithMenu{
+width:400px;
+height:1000px;
+background-color: #efefef; 
+}
+.main{
+  height:300px;
+  background-color: red;
+}
+.sidenav {
+  // height: 1000px;
+  // width: 230px;
+  padding-right:10px;
+  // position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  // background-color: #rgb(255, 255, 255);
+  background-color: black;
+  // overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #efefef;
+  // color: #818181;
+  // color: #222;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+      `}</style>
   </div>
-)
+}
 
 export default Home

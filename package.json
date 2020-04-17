@@ -8,8 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@atlaskit/css-reset": "^5.0.10",
     "next": "9.3.5",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-beautiful-dnd-next": "^11.0.5",
+    "react-dom": "16.13.1",
+    "styled-components": "^5.1.0"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.1.2",
+    "autoprefixer": "^9.7.6",
+    "tailwindcss": "^1.2.0"
   }
 }
