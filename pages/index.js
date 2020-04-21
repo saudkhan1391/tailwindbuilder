@@ -10,46 +10,15 @@ import { DragDropContext } from "react-beautiful-dnd-next";
 import Canvas from '../components/DragLogic/Canvas';
 import FileSaver from 'file-saver';
 const Home = () => {
-  // this.myRef= React.createRef()
-  let myRef = useRef;
-  function SaveIt() {
-    // var file = new File(["Hello, world!"], "hello world.html",
-    var file = new File([myRef], "hello world.text",
-      // { type: "text/plain;charset=utf-8" });
-      { type: "text/plain;charset=utf-8" });
-    FileSaver.saveAs(file);
-  }
-  const code = () => (
-    <html>
-      <div>code sample</div>
-    </html>
-  )
   function download() {
-    // var blob = new Blob(["Hello World"], { type: "text/plain;charset=utf-8" });
-    // var blob = new Blob([<div>adfasfas</div>], { type: "text/javascript" });
     var pageHTML = window.document.getElementById('my-canvas').outerHTML;
     let blob = new Blob([pageHTML], { type: 'data:attachment/text,' });
     // let blob = new Blob([window.hyee.innerHTML], { type: 'data:attachment/text,' });
-    // var blob = new Blob([code], { type: "text/javascript" });
-    // var blob = new Blob([myRef], { type: "text/javascript" });
-
     saveAs(blob, "helloworld.html");
   }
 
-  function saveCanvas() {
-    // var canvas = document.getElementById("my-canvas");
-    // var canvas = myRef;
-    var canvas = myRef;
-    canvas.toBlob(function (blob) {
-      saveAs(blob, "prettyimage.text");
-      // saveAs(blob, "pretty image.png");
-    });
-  }
-  // saveCanvas()
-  // SaveIt()
   const [selectedOption, setSelectedOption] = useState("");
   const menuDetails = (selectedOption) => {
-    // alert("asdfsdf");
     switch (selectedOption) {
       case "Navigations":
         return (<div> <Sample1 title="Navigations" /> <Sample2 /> </div>)
@@ -212,8 +181,8 @@ const Home = () => {
             {draggableComponnents()}
           </div>}
         </div>
-        <div className="flex flex-col " ref={(iref) => window.hyee  = iref} id="abc" >
-          <button className="bg-blue-600 h-12 w-32 self-end mt-10 text-white font-bold"
+        <div className="flex flex-col " ref={(iref) => window.hyee = iref} id="abc" >
+          <button className="bg-blue-600 h-12 w-32 self-end mt-10 text-white font-bold "
             onClick={() => { download() }}
           >
             Export Project
