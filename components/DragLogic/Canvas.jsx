@@ -4,7 +4,6 @@ import Task from "./Tasks";
 import { Droppable, Draggable } from "react-beautiful-dnd-next";
 import { Draggable as Draggable2 } from 'react-draggable';
 import { useEffect } from "react";
-import DragResizeContainer from 'react-drag-resize';
 const Container1 = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
@@ -29,6 +28,8 @@ export default function Canvas(props) {
   const [canvasWidth, setCanvasWidth] = useState(700);
   const [variableTop, setVariableTop] = useState(100);
   const [variableLeft, setVariableLeft] = useState(600);
+  const [mouseMoving, setMouseMoving] = useState(false);
+  const [mouseDown, setMouseDown] = useState(false);
   useEffect(() => {
 
   })
@@ -48,6 +49,7 @@ export default function Canvas(props) {
     }
   }
   function dragMouseDown(e) {
+
     e = e || window.event;
     e.preventDefault();
     // get the mouse cursor position at startup:
@@ -62,34 +64,37 @@ export default function Canvas(props) {
   }
   var checkdirection = 0;
   function elementDrag(e) {
-    console.log("sdsds");
-    // alert("Asdfasdf")
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    console.log("postioss of cursor :", pos1, pos2, pos3, pos4)
-    // set the element's new position:
-    // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    // elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    // setVariableTop( (elmnt.offsetTop - pos2) + "px");
-    // setVariableTop((variableTop - pos2));
-    // setVariableLeft(variableLeft - pos1)
-    // checkdirection = pos3;
-    // if (checkdirection <= pos3) {
-    //   setVariableLeft(variableLeft - 1)
-    //   checkdirection = e.clientX;
-    // }
-    // // else{
-    // if (checkdirection >= pos3) {
-    //   setVariableLeft(variableLeft + 1);
-    //   checkdirection = e.clientX;
-    // }
-    // }
-    // elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    if (mouseDown) {
+      // alert("Asdfasdf")
+      e = e || window.event;
+      e.preventDefault();
+      // calculate the new cursor position:
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      console.log("postioss of cursor :", pos1, pos2, pos3, pos4);
+      // setCanvasWidth(canvasWidth - pos1)
+      setCanvasWidth(canvasWidth - 1)
+      // set the element's new position:
+      // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+      // elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+      // setVariableTop( (elmnt.offsetTop - pos2) + "px");
+      // setVariableTop((variableTop - pos2));
+      // setVariableLeft(variableLeft - pos1)
+      // checkdirection = pos3;
+      // if (checkdirection <= pos3) {
+      //   setVariableLeft(variableLeft - 1)
+      //   checkdirection = e.clientX;
+      // }
+      // // else{
+      // if (checkdirection >= pos3) {
+      //   setVariableLeft(variableLeft + 1);
+      //   checkdirection = e.clientX;
+      // }
+      // }
+      // elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
   }
 
   function closeDragElement() {
@@ -106,7 +111,7 @@ export default function Canvas(props) {
     // <Container1>
     <div className="flex justify-center " id="mydiv">
       <div className="flex absolute" style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} id="my-canvas" >
-      {/* <div className="flex " id="my-canvas" > */}
+        {/* <div className="flex " id="my-canvas" > */}
         <div className=" m-8 border border-solid border-gray-400 flex flex-col" style={{ width: canvasWidth }}>
           <Title>{props.column.title}</Title>
           <Droppable droppableId={props.column.id}>
@@ -120,18 +125,20 @@ export default function Canvas(props) {
             )}
           </Droppable>
         </div>
-        <button className="w-8 bg-gray-600 mt-8 mb-8" id="mydivheader"   onClick={() => {
+        <button className="w-8 bg-gray-600 mt-8 mb-8" id="mydivheader" onClick={() => {
           // var mydiv = window.document.getElementById("mydiv");
           // dragElement(mydiv);
-        }} 
-        
-        onMouseDown={() => {
-          var mydiv = window.document.getElementById("mydiv");
-          // dragElement(mydiv);
-          dragMouseDown();
-          console.log("afasfd");
-        }} onMouseUp={() => { closeDragElement(); onmouseup = null; onmousemove = null }}
+        }}
+
+          onMouseDown={() => {
+            var mydiv = window.document.getElementById("mydiv");
+            // dragElement(mydiv);
+            setMouseDown(true)
+            dragMouseDown();
+          }}
+          onMouseUp={() => { closeDragElement(); onmouseup = null; onmousemove = null; setMouseDown(false) }}
           onMouseMove={() => { elementDrag() }}
+        // onMouseMove={() => { setMouseMoving(true) }}
         />
       </div>
 
