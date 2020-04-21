@@ -51,6 +51,7 @@ export default function Canvas(props) {
   function dragMouseDown(e) {
 
     e = e || window.event;
+    console.log("eee", e)
     e.preventDefault();
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
@@ -63,7 +64,9 @@ export default function Canvas(props) {
     console.log("postioss of cursor on drag Down :", pos1, pos2, pos3, pos4)
   }
   var checkdirection = 0;
+
   function elementDrag(e) {
+    console.log("mouse down", mouseDown);
     if (mouseDown) {
       // alert("Asdfasdf")
       e = e || window.event;
@@ -74,8 +77,15 @@ export default function Canvas(props) {
       pos3 = e.clientX;
       pos4 = e.clientY;
       console.log("postioss of cursor :", pos1, pos2, pos3, pos4);
+      // window.document.onmouseup = closeDragElement();
+      // window.document.onmouseup = closeDragElement();
       // setCanvasWidth(canvasWidth - pos1)
-      setCanvasWidth(canvasWidth - 1)
+      if (pos1 < 0) {
+        setCanvasWidth(canvasWidth - 1)
+      }
+      else {
+        setCanvasWidth(canvasWidth + 1)
+      }
       // set the element's new position:
       // elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
       // elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
@@ -101,6 +111,7 @@ export default function Canvas(props) {
     /* stop moving when mouse button is released:*/
     window.document.onmouseup = null;
     window.document.onmousemove = null;
+    setMouseDown(false)
     console.log("postioss of cursor on drag up :", pos1, pos2, pos3, pos4)
   }
   const canResizable = (isResize) => {
@@ -134,9 +145,9 @@ export default function Canvas(props) {
             var mydiv = window.document.getElementById("mydiv");
             // dragElement(mydiv);
             setMouseDown(true)
-            dragMouseDown();
+            // dragMouseDown();
           }}
-          onMouseUp={() => { closeDragElement(); onmouseup = null; onmousemove = null; setMouseDown(false) }}
+          onMouseUp={() => { setMouseDown(false); closeDragElement(); onmouseup = null; onmousemove = null; }}
           onMouseMove={() => { elementDrag() }}
         // onMouseMove={() => { setMouseMoving(true) }}
         />
