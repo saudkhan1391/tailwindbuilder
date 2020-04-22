@@ -1,28 +1,7 @@
-import React, { useState ,useEffect} from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import Task from "./Tasks";
 import { Droppable, Draggable } from "react-beautiful-dnd-next";
-import { Draggable as Draggable2 } from 'react-draggable';
-const Container1 = styled.div`
-  margin: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
-  width: 380px;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-`;
-const Title = styled.h3`
-  padding: 8px;
-`;
-const TaskList = styled.div`
-  padding: 28px;
-  transition: background-color 0.2s ease;
-  background-color: ${props => (props.isDraggingOver ? "skyblue" : "white")};
-  margin-right:1px;
-  // flex-grow: 1;
-  min-height: 100px;
-`;
+
 export default function Canvas1(props) {
     const [canvasWidth, setCanvasWidth] = useState(1000);
     const [variableTop, setVariableTop] = useState(100);
@@ -47,7 +26,7 @@ export default function Canvas1(props) {
         panel.addEventListener("mousedown", function (e) {
             if (e.offsetX < BORDER_SIZE) {
                 m_pos = e.x;
-               document.addEventListener("mousemove", resize, false);
+                document.addEventListener("mousemove", resize, false);
             }
         }, false);
 
@@ -59,8 +38,8 @@ export default function Canvas1(props) {
     return (
         // <Container1>
         <div className=" flex justify-center  " id="mydiv">
-            <div className="  flex absolute z-1" style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} id="my-canvas" >
-             {/* <div  id="right_panel">Hello</div> */}
+            <div className="  flex absolute z-1 after:bg-black after:w-32 after:h-32 " style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} id="my-canvas" >
+                {/* <div  id="right_panel">Hello</div> */}
                 <div className=" m-8   border border-solid border-gray-400 flex flex-col" style={{ width: canvasWidth }}>
                     <div className="bg-gray-100 h-12 border-b border-gray-400 justify-between flex items-center pl-4 pr-4">
                         <div className="flex w-20 justify-between">
@@ -78,7 +57,7 @@ export default function Canvas1(props) {
                         {provided => (
                             <div className="bg-white">
 
-                                <TaskList ref={provided.innerRef} {...provided.droppalbeProps}>
+                                <div className={`p-8 m-2 border  ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`} ref={provided.innerRef} {...provided.droppalbeProps}>
                                     <div>
                                         {props.tasks == "" && <div className="mt-12 mt-32 mb-32">
                                             <h1 className="text-xl text-center">Start Creating a Template by selecting relevent UI Components</h1>
@@ -89,30 +68,21 @@ export default function Canvas1(props) {
                                         ))}
                                     </div>
                                     {provided.placeholder}
-                                </TaskList>
+                                </div>
                             </div>
                         )}
                     </Droppable>
                 </div>
-
-                {/* <button className="w-4 bg-gray-400 mt-8 mb-8" id="mydivheader" onClick={() => {
-                }}
-                    onMouseDown={() => {
-                    }}
-                /> */}
             </div>
             <style jsx>{`
             #my-canvas:after {
                 content: " ";
                 background-color: #ccc;
                 position: absolute;
-                // right: 0;
-                // margin-left: 25px;
                 width: 9px;
                 height: 86%;
                 cursor: w-resize;
                 margin-top:34px;
-                // margin-bottom:150px;
             }  
              `}</style>
         </div>

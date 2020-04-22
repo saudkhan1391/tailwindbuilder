@@ -1,13 +1,11 @@
 import React, { useState, useRef } from 'react'
 
 import Head from 'next/head'
-import Nav from '../components/nav'
 import Sample1, { Sample2 } from '../components/DraggableComponents/sample1'
 
 import { initialData2 } from "../components/DragLogic/initial_data";
 import Column from "../components/DragLogic/column";
 import { DragDropContext } from "react-beautiful-dnd-next";
-import Canvas from '../components/DragLogic/Canvas';
 import FileSaver from 'file-saver';
 import Canvas1 from '../components/DragLogic/Canvas1';
 const Home = () => {
@@ -126,8 +124,8 @@ const Home = () => {
     const column = initialData.columns["column-2"];
     const tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
     return <Canvas1 key={column.id} column={column} tasks={tasks} myData={sample} />;
-  } 
-  return <div className="bg-gray-100 h-screen" style={ selectedOption ? {backgroundColor: "rgba(0,0,0,0.4)"  } :{} }>
+  }
+  return <div className="bg-gray-100 h-screen" style={selectedOption ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
     <DragDropContext
       onDragEnd={result => {
         onDragEnd(result);
@@ -141,41 +139,42 @@ const Home = () => {
       <div onMouseLeave={() => { setSelectedOption("") }} className="flex w-2/5 " >
         <div className="flex" >
           <div className="flex flex-col w-56 bg-gray-100" >
-            <div className="border-solid border border-gray-400 bg-grey">
+            <div className=" border border-b-0 border-gray-400 bg-grey">
               <img src="/logo.png" className="w-32 m-6 " />
             </div>
-            <div className="sidenav">
+            <div className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{ height: 530 }}>
               {/* <a href="#" className="closebtn">&times;</a> */}
-              <a href="#" className="text-gray-500 font-bold "  >Base</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Navigations"); }}  >Navigations</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Headers"); }}>Headers</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Contents"); }}>Contents</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Features"); }}>Features</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("How"); }}>How it works ?</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Testimonials"); }}>Testimonials</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Portfolio"); }}>Portfolio</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Team"); }}>Team</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Pricing"); }}>Pricing</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Facts"); }}>Facts</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Contacts"); }}>Contacts</a>
-              <a href="#" onMouseOver={() => { setSelectedOption("Footers"); }}>Footers</a>
+              <h4 href="#" className="text-gray-500 font-bold p-1 ml-8 text-lg "  >Base</h4>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 underline duration-300 text-black" onMouseOver={() => { setSelectedOption("Navigations"); }}  >Navigations</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Headers"); }}>Headers</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Contents"); }}>Contents</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Features"); }}>Features</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("How"); }}>How it works ?</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Testimonials"); }}>Testimonials</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Portfolio"); }}>Portfolio</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Team"); }}>Team</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Pricing"); }}>Pricing</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Facts"); }}>Facts</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Contacts"); }}>Contacts</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Footers"); }}>Footers</a>
 
-              <a href="#" className="text-gray-500 font-bold mt-5">Pages</a>
-              <a href="#">Sign In</a>
-              <a href="#">BLog</a>
-              <a href="#">Ecoomerce</a>
-              <a href="#">Admin</a>
-              <a href="#">HTTP Codes</a>
+              <h4 href="#" className="text-gray-500 font-bold mt-5  p-1 ml-8 text-lg">Pages</h4>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline" >Sign In</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline" >BLog</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline" >Ecoomerce</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline" >Admin</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline" >HTTP Codes</a>
 
-              <a href="#" className="text-gray-500 font-bold mt-5" >Utils</a>
-              <a href="#">Cookies</a>
-              <a href="#">Call to action</a>
-              <a href="#">Gallery</a>
-              <a href="#">Grid</a>
-              <a href="#">Pagination</a>
+              <h4 href="#" className="text-gray-500 font-bold mt-5 p-1 ml-8 text-lg" >Utils</h4>
+              <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Cookies</a>
+              <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Call to action</a>
+              <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Gallery</a>
+              <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Grid</a>
+              <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Pagination</a>
             </div>
+            {/* <div className="h-32 w-10  bg-black" >sdsd </div> */}
           </div>
-          {selectedOption && <div className="componentsWithMenu h-screen z-10 " >
+          {selectedOption && <div className=" bg-gray-100 h-screen z-10" >
             <div className="h-5 " />
             <h5 className="text-center text-grey-100 text-lg mt-5 mb-5">Select a component and drag it to the canvas</h5>
             {/* {menuDetails(selectedOption)} */}
@@ -191,76 +190,10 @@ const Home = () => {
           </button>
         </div>
         <div className="flex  flex-col " ref={(iref) => window.hyee = iref} id="abc" >
-            {canvas()}
+          {canvas()}
         </div>
       </div>
     </DragDropContext>
-
-    <style jsx>{`
-    
-body {
-  font-family: "Lato", sans-serif;
-  background-color: black;
-}
-.canvas{
-  border:solid 1px;
-  border-color: black;
-  width:100%;
-  margin-left:50px;
-  margin-right:50px;
-  margin-top:5px;
-}
-.componentsWithMenu{
-width:400px;
-// height:1000px;
-background-color: #f8f9fa; 
-
-}
-.main{
-  height:300px;
-  background-color: red;
-}
-.sidenav {
-  height: 500px;
-  // width: 230px;
-  padding-right:10px;
-  // position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #f8f9fa;
-  // overflow-x: hidden;
-  transition: 0.5s;
-  overflow: scroll;
-  border-right:solid 1px;
-  border-bottom:solid 1px;
-  border-color: grey;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  // font-size: 25px;
-  font-size: 1rem;
-  color: ##495057;
-  // color: #818181;
-  // color: #222;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-      `}</style>
   </div>
 }
 
