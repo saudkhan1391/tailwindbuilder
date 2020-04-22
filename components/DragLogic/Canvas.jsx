@@ -25,9 +25,9 @@ const TaskList = styled.div`
   min-height: 100px;
 `;
 export default function Canvas(props) {
-  const [canvasWidth, setCanvasWidth] = useState(700);
+  const [canvasWidth, setCanvasWidth] = useState(1000);
   const [variableTop, setVariableTop] = useState(100);
-  const [variableLeft, setVariableLeft] = useState(600);
+  const [variableLeft, setVariableLeft] = useState(400);
   const [mouseMoving, setMouseMoving] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   useEffect(() => {
@@ -114,29 +114,47 @@ export default function Canvas(props) {
     setMouseDown(false)
     console.log("postioss of cursor on drag up :", pos1, pos2, pos3, pos4)
   }
-  const canResizable = (isResize) => {
-    return { top: isResize, right: isResize, bottom: isResize, left: isResize, topRight: isResize, bottomRight: isResize, bottomLeft: isResize, topLeft: isResize };
-  };
-  const layout = [{ key: 'test', x: 0, y: 0, width: 200, height: 100, zIndex: 1 }]
+  console.log(props,"canavs")
   return (
     // <Container1>
-    <div className="flex justify-center " id="mydiv">
-      <div className="flex absolute" style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} id="my-canvas" >
+    <div className="flex justify-center  " id="mydiv">
+      <div className="flex absolute z-1" style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} id="my-canvas" >
         {/* <div className="flex " id="my-canvas" > */}
-        <div className=" m-8 border border-solid border-gray-400 flex flex-col" style={{ width: canvasWidth }}>
-          <Title>{props.column.title}</Title>
+        <div className=" m-8 mr-1  border border-solid border-gray-400 flex flex-col" style={{ width: canvasWidth }}>
+          <div className="bg-gray-100 h-12 border-b border-gray-400 justify-between flex items-center pl-4 pr-4">
+            <div className="flex w-20 justify-between">
+              <div className="w-5 bg-gray-400 h-5 rounded-full" />
+              <div className="w-5 bg-gray-400 h-5 rounded-full" />
+              <div className="w-5 bg-gray-400 h-5 rounded-full" />
+            </div>
+            <div className="bg-white w-64 h-8 flex justify-center items-center border">
+              <h4>index.html</h4>
+            </div>
+            <div>
+            </div>
+          </div>
+          {/* <Title>{props.column.title}</Title> */}
           <Droppable droppableId={props.column.id}>
             {provided => (
-              <TaskList ref={provided.innerRef} {...provided.droppalbeProps}>
-                {props.tasks.map((task, index) => (
-                  <Task key={task.id} task={task} index={index} myData={props.myData}></Task>
-                ))}
-                {provided.placeholder}
-              </TaskList>
+              <div className="bg-white">
+
+                <TaskList ref={provided.innerRef} {...provided.droppalbeProps}>
+                  <div>
+                   { props.tasks == "" && <div className="mt-12 mt-32 mb-32">
+                      <h1 className="text-xl text-center">Start Creating a Template by selecting relevent UI Components</h1>
+                      <h1 className="text-md text-center text-gray-600 mt-5">Drag & drop them here. You can change the default tailwind styles by clicking the change styles button.</h1>
+                    </div>}
+                    {props.tasks.map((task, index) => (
+                      <Task key={task.id} task={task} index={index} myData={props.myData}></Task>
+                    ))}
+                  </div>
+                  {provided.placeholder}
+                </TaskList>
+              </div>
             )}
           </Droppable>
         </div>
-        <button className="w-8 bg-gray-600 mt-8 mb-8" id="mydivheader" onClick={() => {
+        <button className="w-4 bg-gray-400 mt-8 mb-8" id="mydivheader" onClick={() => {
           // var mydiv = window.document.getElementById("mydiv");
           // dragElement(mydiv);
         }}

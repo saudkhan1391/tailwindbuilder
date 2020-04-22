@@ -126,7 +126,7 @@ const Home = () => {
     const tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
     return <Canvas key={column.id} column={column} tasks={tasks} myData={sample} />;
   }
-  return <div>
+  return <div className="bg-gray-100 h-screen">
     <DragDropContext
       onDragEnd={result => {
         onDragEnd(result);
@@ -174,20 +174,23 @@ const Home = () => {
               <a href="#">Pagination</a>
             </div>
           </div>
-          {selectedOption && <div className="componentsWithMenu h-screen" >
-            <div className="h-5" />
+          {selectedOption && <div className="componentsWithMenu h-screen z-10 " >
+            <div className="h-5 " />
             <h5 className="text-center text-grey-100 text-lg mt-5 mb-5">Select a component and drag it to the canvas</h5>
             {/* {menuDetails(selectedOption)} */}
             {draggableComponnents()}
           </div>}
         </div>
-        <div className="flex flex-col " ref={(iref) => window.hyee = iref} id="abc" >
-          <button className="bg-blue-600 h-12 w-32 self-end mt-10 text-white font-bold "
+
+        <div className="flex absolute w-full justify-end">
+          <button className="bg-blue-600 h-12 rounded w-32  mt-5 mr-10 text-white font-bold"
             onClick={() => { download() }}
           >
             Export Project
           </button>
-          {canvas()}
+        </div>
+        <div className="flex  flex-col bg-blue-600" ref={(iref) => window.hyee = iref} id="abc" >
+            {canvas()}
         </div>
       </div>
     </DragDropContext>
