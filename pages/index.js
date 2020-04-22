@@ -9,6 +9,7 @@ import Column from "../components/DragLogic/column";
 import { DragDropContext } from "react-beautiful-dnd-next";
 import Canvas from '../components/DragLogic/Canvas';
 import FileSaver from 'file-saver';
+import Canvas1 from '../components/DragLogic/Canvas1';
 const Home = () => {
   function download() {
     var pageHTML = window.document.getElementById('my-canvas').outerHTML;
@@ -124,9 +125,9 @@ const Home = () => {
   function canvas() {
     const column = initialData.columns["column-2"];
     const tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
-    return <Canvas key={column.id} column={column} tasks={tasks} myData={sample} />;
-  }
-  return <div className="bg-gray-100 h-screen">
+    return <Canvas1 key={column.id} column={column} tasks={tasks} myData={sample} />;
+  } 
+  return <div className="bg-gray-100 h-screen" style={ selectedOption ? {backgroundColor: "rgba(0,0,0,0.4)"  } :{} }>
     <DragDropContext
       onDragEnd={result => {
         onDragEnd(result);
@@ -189,7 +190,7 @@ const Home = () => {
             Export Project
           </button>
         </div>
-        <div className="flex  flex-col bg-blue-600" ref={(iref) => window.hyee = iref} id="abc" >
+        <div className="flex  flex-col " ref={(iref) => window.hyee = iref} id="abc" >
             {canvas()}
         </div>
       </div>
