@@ -17,6 +17,7 @@
     "react-dom": "16.13.1",
     "react-drag-resize": "^0.1.4",
     "react-draggable": "^4.3.1",
+    "react-icons": "^3.10.0",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {

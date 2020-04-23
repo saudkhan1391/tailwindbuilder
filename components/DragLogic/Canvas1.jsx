@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Task from "./Tasks";
 import { Droppable, Draggable } from "react-beautiful-dnd-next";
-
+import { AiOutlineMobile, AiOutlineDesktop, AiOutlineTablet } from 'react-icons/ai';
 export default function Canvas1(props) {
     const [canvasWidth, setCanvasWidth] = useState(1000);
     const [variableTop, setVariableTop] = useState(100);
     const [variableLeft, setVariableLeft] = useState(400);
     const [mouseMoving, setMouseMoving] = useState(false);
     const [mouseDown, setMouseDown] = useState(false);
+    const [currentSize, setCurrentSize] = useState("desktop");
     useEffect(() => {
         resizeDivOnDrag();
     })
@@ -34,10 +35,26 @@ export default function Canvas1(props) {
             document.removeEventListener("mousemove", resize, false);
         }, false);
     }
+    const changeScreenSize = (screenType) => {
+        const panel = document.getElementById("my-canvas");
+        const screenBtn = document.getElementById(screenType);
+        setCurrentSize(screenType);
+        switch (screenType) {
+            case "desktop":
+                return (panel.style.width = 1000 + "px")
+            case "medium":
+                return (panel.style.width = 700 + "px")
+            case "small":
+                return (panel.style.width = 300 + "px")
+            default:
+                return panel.style.width = "1000px"
+        }
+    }
     console.log(props, "canavs")
     return (
         // <Container1>
         <div className=" flex justify-center  " id="mydiv">
+
             <div className="  flex absolute z-1 after:bg-black after:w-32 after:h-32 " style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} id="my-canvas" >
                 {/* <div  id="right_panel">Hello</div> */}
                 <div className=" m-8   border border-solid border-gray-400 flex flex-col" style={{ width: canvasWidth }}>
@@ -47,10 +64,13 @@ export default function Canvas1(props) {
                             <div className="w-5 bg-gray-400 h-5 rounded-full" />
                             <div className="w-5 bg-gray-400 h-5 rounded-full" />
                         </div>
-                        <div className="bg-white w-64 h-8 flex justify-center items-center border">
+                        <div className="bg-white w-64 h-8 flex justify-center items-center border ml-2 mr-2">
                             <h4>index.html</h4>
                         </div>
-                        <div>
+                        <div className="flex w-24 justify-between items-center">
+                            <AiOutlineDesktop size={26} onClick={() => { changeScreenSize("desktop") }} className={`${currentSize == "desktop" && "bg-gray-300"}`} />
+                            <AiOutlineTablet size={25} onClick={() => { changeScreenSize("medium") }} className={`${currentSize == "medium" && "bg-gray-300"}`} />
+                            <AiOutlineMobile size={22} onClick={() => { changeScreenSize("small") }} className={`${currentSize == "small" && "bg-gray-300"}`} />
                         </div>
                     </div>
                     <Droppable droppableId={props.column.id}>
