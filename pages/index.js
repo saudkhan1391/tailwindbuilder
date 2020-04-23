@@ -145,7 +145,7 @@ const Home = () => {
             <div className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{ height: 530 }}>
               {/* <a href="#" className="closebtn">&times;</a> */}
               <h4 href="#" className="text-gray-500 font-bold p-1 ml-8 text-lg "  >Base</h4>
-              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 underline duration-300 text-black" onMouseOver={() => { setSelectedOption("Navigations"); }}  >Navigations</a>
+              <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300 text-black" onMouseOver={() => { setSelectedOption("Navigations"); }}  >Navigations</a>
               <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Headers"); }}>Headers</a>
               <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Contents"); }}>Contents</a>
               <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300" onMouseOver={() => { setSelectedOption("Features"); }}>Features</a>
