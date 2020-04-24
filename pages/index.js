@@ -10,7 +10,7 @@ import FileSaver from 'file-saver';
 import Canvas1 from '../components/DragLogic/Canvas1';
 const Home = () => {
   function download() {
-    var pageHTML = window.document.getElementById('my-canvas').outerHTML;
+    var pageHTML = window.document.getElementById('main-canvas').outerHTML;
     let blob = new Blob([pageHTML], { type: 'data:attachment/text,' });
     // let blob = new Blob([window.hyee.innerHTML], { type: 'data:attachment/text,' });
     saveAs(blob, "helloworld.html");
@@ -90,7 +90,7 @@ const Home = () => {
       return;
     }
     const startTaskids = Array.from(start.taskIds);
-    startTaskids.splice(source.index, 1);
+    // startTaskids.splice(source.index, 1);
     const newStart = { ...start, taskIds: startTaskids };
 
     const finishTaskids = Array.from(finish.taskIds);
@@ -127,6 +127,7 @@ const Home = () => {
   }
   return <div className="bg-gray-100 h-screen" style={selectedOption ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
     <DragDropContext
+     
       onDragEnd={result => {
         onDragEnd(result);
       }}
@@ -138,11 +139,11 @@ const Home = () => {
       {/* <Nav /> */}
       <div onMouseLeave={() => { setSelectedOption("") }} className="flex w-2/5 " >
         <div className="flex" >
-          <div className="flex flex-col w-56 bg-gray-100" >
+          <div className="flex flex-col w-56 bg-gray-100 h-screen" >
             <div className=" border border-b-0 border-gray-400 bg-grey">
               <img src="/logo.png" className="w-32 m-6 " />
             </div>
-            <div className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{ height: 530 }}>
+            <div className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{  }}>
               {/* <a href="#" className="closebtn">&times;</a> */}
               <h4 href="#" className="text-gray-500 font-bold p-1 ml-8 text-lg "  >Base</h4>
               <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300 text-black" onMouseOver={() => { setSelectedOption("Navigations"); }}  >Navigations</a>
