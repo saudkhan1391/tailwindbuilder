@@ -17,6 +17,7 @@ const Home = () => {
   }
 
   const [selectedOption, setSelectedOption] = useState("");
+  const [clickedComponent, setClickedComponent] = useState("");
   const menuDetails = (selectedOption) => {
     switch (selectedOption) {
       case "Navigations":
@@ -90,7 +91,9 @@ const Home = () => {
       return;
     }
     const startTaskids = Array.from(start.taskIds);
-    // startTaskids.splice(source.index, 1);
+    if (clickedComponent != "column-1") {
+      startTaskids.splice(source.index, 1);
+    }
     const newStart = { ...start, taskIds: startTaskids };
 
     const finishTaskids = Array.from(finish.taskIds);
@@ -117,7 +120,10 @@ const Home = () => {
   }
   function draggableComponnents() {
     const column = initialData.columns["column-1"];
-    const tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
+    let tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
+    if (clickedComponent == "column-1") {
+      // tasks = "";
+    }
     return <Column key={column.id} column={column} tasks={tasks} myData={sample} />;
   }
   function canvas() {
@@ -127,10 +133,15 @@ const Home = () => {
   }
   return <div className="bg-gray-100 h-screen" style={selectedOption ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
     <DragDropContext
-     
+
       onDragEnd={result => {
         onDragEnd(result);
       }}
+      onDragStart={(a) => {
+        console.log("ondrag start ", a)
+        setClickedComponent(a.source.droppableId);
+      }}
+    // onMouseDown={(a) => { console.log("on mouse donw", a) }}
     >
       <Head>
         <title>Home</title>
@@ -143,7 +154,7 @@ const Home = () => {
             <div className=" border border-b-0 border-gray-400 bg-grey">
               <img src="/logo.png" className="w-32 m-6 " />
             </div>
-            <div className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{  }}>
+            <div className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{}}>
               {/* <a href="#" className="closebtn">&times;</a> */}
               <h4 href="#" className="text-gray-500 font-bold p-1 ml-8 text-lg "  >Base</h4>
               <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300 text-black" onMouseOver={() => { setSelectedOption("Navigations"); }}  >Navigations</a>
