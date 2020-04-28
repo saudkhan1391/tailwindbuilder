@@ -94,29 +94,17 @@ const Home = () => {
       }
       const newStart = { ...start, taskIds: startTaskids };
       const finishTaskids = Array.from(finish.taskIds);
-      // finishTaskids.splice(destination.index, 0, draggableId);
       const uniqueId = uuid()
       finishTaskids.splice(destination.index, 0, uniqueId);
       const sourceClone = Array.from(source);
       const destClone = Array.from(destination);
-      // const item = sourceClone[droppableSource.index];
       const droppableSource = destination.droppableId;
       const item = sourceClone[droppableSource.index];
       destClone.splice(destination.index, 0, { ...item, id: "task-5" });
-      // destClone.splice(destination.index, 0, { ...item, id: uuid() });
       const newFinish = { ...finish, taskIds: finishTaskids };
-      // const newFinish = { ...finish, taskIds:  { ...item, id: "task-5" } };
-      // const newFinish = { ...finish, taskIds: destClone };
       let tasks = (canvasData.tasks);
-      // let newTasks = { ...tasks, "task-5": { id: "task-5", content: "Cook dinner 5" } }
-      // tasks[uniqueId] = { id: uniqueId, content: "Cook dinner 5" };
       let task = tasks[draggableId];
       tasks[uniqueId] = { ...task, id: uniqueId };
-      console.log("task aaaaaaaaaaaaa:", task)
-      console.log("source aaaaaaaaaaaaa:", source)
-      console.log("dragable id aaaaaaaaaaaaa:", draggableId)
-      console.log("tasks aaaaaaaaaaaaaaaa : ", tasks)
-      // let newTasks = { ...tasks, "task-5": { id: uniqueId, content: "Cook dinner 5" } }
       if (clickedComponent == "column-1") {
         const newState = {
           ...initialData, columns: {
@@ -130,7 +118,7 @@ const Home = () => {
       }
       else {
         const finishTaskids2 = Array.from(finish.taskIds);
-        finishTaskids2.splice(source.index,1);
+        finishTaskids2.splice(source.index, 1);
         finishTaskids2.splice(destination.index, 0, uniqueId);
         const newFinish2 = { ...finish, taskIds: finishTaskids2 };
         const newState2 = {
@@ -141,7 +129,7 @@ const Home = () => {
           },
           // tasks: tasks
         }
-        
+
         const newTaskIds = Array.from(start.taskIds);
         newTaskIds.splice(source.index, 1);
         newTaskIds.splice(destination.index, 0, draggableId);
@@ -160,11 +148,6 @@ const Home = () => {
         //
         setCanvasData(newState2)
       }
-
-      console.log("newfinish 1 : ", newFinish);
-      // console.log("new tasks 1 : ", newTasks)
-      // console.log("nwestate 1 : ", newState)
-      console.log("draggable id  : ", draggableId)
     }
   }
   const sample = () => {
@@ -180,12 +163,9 @@ const Home = () => {
   function draggableComponnents() {
     const column = initialData.columns["column-1"];
     let tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
-    // if (clickedComponent == "column-1") {
-    // }
     var arraytasks = Object.values(initialData.tasks);
     var filteredTasks = column.taskIds.map((taskId) => {
       var findTasks = arraytasks.find(tsk => {
-        // return (tsk.id == canvasData.tasks[taskId].id)
         return (tsk.id == taskId)
       })
       return findTasks
@@ -198,28 +178,13 @@ const Home = () => {
     var arraytasks = Object.values(canvasData.tasks);
     // const tasks =  arraytasks.forEach((tsk)=> {tsk.id == taskId  } ) ;
     var filteredTasks = column.taskIds.map((taskId) => {
-
       var findTasks = arraytasks.find(tsk => {
-
-        var canvasDatadot = canvasData.tasks;
-        var taskIdDot = taskId;
-        // console.log("tsk and task id", tsk, taskIdDot);
-        // console.log("cavanvasdata.tasks :", canvasDatadot);
-        // console.log("tasks only", tasks);
-        // console.log("tsk.id", tsk.id);
-        // if (canvasData.tasks[taskId]) {
-        // console.log("all details 2", tsk.id, canvasData.tasks[taskId]);
-        // console.log("result", tsk.id == canvasData.tasks[taskId].id);
-        // return (tsk.id == canvasData.tasks[taskId].id)
         return (tsk.id == taskId)
-        // }
       })
-      // console.log(" find tasks ", findTasks);
       return findTasks
     })
     console.log("filter tasks ", filteredTasks)
     console.log("canvas columns task Ids", column.taskIds)
-    // const tasks = column.taskIds.map((taskId) => { if (canvasData.tasks.id == taskId) { return (canvasData.tasks[taskId]) } });
     return <Canvas1 key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
   }
   return <div className="bg-gray-100 h-screen" style={selectedOption ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
@@ -231,23 +196,6 @@ const Home = () => {
       onDragStart={(result) => {
         console.log("ondrag start ", result);
         setClickedComponent(result.source.droppableId);
-        // const { source, draggableId } = result;
-        // const start = initialData.columns[source.droppableId];
-
-        // const startTaskids = Array.from(start.taskIds);
-        // if (clickedComponent != "column-1") {
-        //   startTaskids.splice(source.index, 0,draggableId);
-        // }
-        // const newStart = { ...start, taskIds: startTaskids };
-
-        // const newState = {
-        //   ...initialData, columns: {
-        //     ...initialData.columns,
-        //     [newStart.id]: newStart,
-        //   }
-        // }
-        // setInitialData(newState)
-
       }}
     // onMouseDown={(a) => { console.log("on mouse donw", a) }}
     >

@@ -22,8 +22,13 @@ export default function Canvas1(props) {
             const dx = m_pos - e.x;
             m_pos = e.x;
             let CanvasWidthInNum = (parseInt(getComputedStyle(panel, '').width) - 0);
-            if (CanvasWidthInNum > 549) {
+            // if (CanvasWidthInNum > 549 ) {
+            if (CanvasWidthInNum > 549 && CanvasWidthInNum < 1290) {
                 panel.style.width = (parseInt(getComputedStyle(panel, '').width) - dx) + "px";
+                reRender(render + 1);
+            }
+            if (CanvasWidthInNum > 1290) {
+                (panel.style.width = 1250 + "px")
                 reRender(render + 1);
             }
             if (CanvasWidthInNum < 550) {
@@ -48,7 +53,8 @@ export default function Canvas1(props) {
         setCurrentSize(screenType);
         switch (screenType) {
             case "desktop":
-                return (panel.style.width = 1100 + "px")
+                // return (panel.style.width = 1600 + "px")
+                return (panel.style.width = 75 + "vw")
             case "medium":
                 return (panel.style.width = 700 + "px")
             case "small":
@@ -61,9 +67,11 @@ export default function Canvas1(props) {
         // <Container1>
         <div className=" flex justify-center border " id="mydiv">
 
-            <div className="  flex  z-1 fixed  "
-                style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} id="my-canvas" >
-                <div className=" m-8   border border-solid border-gray-400 flex flex-col" style={{ width: canvasWidth }}>
+            <div className="  flex  z-1 fixed border w-3/4 h-11/12 "
+                style={{ top: "13vh", left: "19vw", }}
+                // style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} 
+                id="my-canvas" >
+                <div className=" border border-solid border-gray-400 flex flex-col w-full "  >
                     <div className="bg-gray-100 h-12 border-b border-gray-400 justify-between flex items-center pl-4 pr-4">
                         <div className="flex w-20 justify-between">
                             <div className="w-5 bg-gray-400 h-5 rounded-full" />
@@ -81,10 +89,9 @@ export default function Canvas1(props) {
                     </div>
                     <Droppable droppableId={props.column.id}>
                         {provided => (
-                            <div className="bg-white overflow-scroll " style={{ height: 500 }} id={"main-canvas"}>
-                                {/* <head> */}
+                            <div className="bg-white overflow-scroll border h-full " style={{ height: "70vh" }} id={"main-canvas"}>
+                                {/* <div className="bg-white overflow-scroll border " style={{ height: 500 }} id={"main-canvas"}> */}
                                 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
-                                {/* </head> */}
                                 <div className={`p-8 m-2   ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`} ref={provided.innerRef} {...provided.droppalbeProps}>
                                     <div>
                                         {props.tasks == "" && <div className="mt-12 mt-32 mb-32">
@@ -93,9 +100,10 @@ export default function Canvas1(props) {
                                         </div>}
                                         {props.tasks.map((task, index) => {
                                             console.log("tasks in canvas mapped ", props)
-                                            return(
-                                          <Task key={task.id} task={task} index={index} myData={props.myData}></Task>
-                                        )})}
+                                            return (
+                                                <Task key={task.id} task={task} index={index} myData={props.myData}></Task>
+                                            )
+                                        })}
                                     </div>
                                     {provided.placeholder}
                                 </div>
@@ -110,13 +118,8 @@ export default function Canvas1(props) {
             #my-canvas span {
                 content: " ";
                 background-color: #ccc;
-                // position: absolute;
-                // right: 0 ;
                 width: 9px;
-                height: 86%;
-                height: 550px;
                 cursor: w-resize;
-                margin-top:34px;
             }  
              `}</style>
         </div>
