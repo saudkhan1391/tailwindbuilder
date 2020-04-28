@@ -1,4 +1,4 @@
-export const initialData2 = {
+export let initialData2 = {
   tasks: {
     "task-1": { id: "task-1", content: "Take out the garbage" },
     "task-2": { id: "task-2", content: "watch my favourite show" },

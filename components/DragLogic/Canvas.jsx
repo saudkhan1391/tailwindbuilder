@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Task from "./Tasks";
-import { Droppable, Draggable } from "react-beautiful-dnd-next";
 import { AiOutlineMobile, AiOutlineDesktop, AiOutlineTablet } from 'react-icons/ai';
-export default function Canvas1(props) {
+export default function Canvas(props) {
     const [canvasWidth, setCanvasWidth] = useState(1100);
     const [variableTop, setVariableTop] = useState(100);
     const [variableLeft, setVariableLeft] = useState(330);
@@ -79,29 +78,21 @@ export default function Canvas1(props) {
                             <AiOutlineMobile size={22} onClick={() => { changeScreenSize("small") }} className={`${currentSize == "small" && "bg-gray-300"}`} />
                         </div>
                     </div>
-                    <Droppable droppableId={props.column.id}>
-                        {provided => (
-                            <div className="bg-white overflow-scroll " style={{ height: 500 }} id={"main-canvas"}>
-                                {/* <head> */}
-                                <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
-                                {/* </head> */}
-                                <div className={`p-8 m-2   ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`} ref={provided.innerRef} {...provided.droppalbeProps}>
-                                    <div>
-                                        {props.tasks == "" && <div className="mt-12 mt-32 mb-32">
-                                            <h1 className="text-xl text-center">Start Creating a Template by selecting relevent UI Components</h1>
-                                            <h1 className="text-md text-center text-gray-600 mt-5">Drag & drop them here. You can change the default tailwind styles by clicking the change styles button.</h1>
-                                        </div>}
-                                        {props.tasks.map((task, index) => {
-                                            console.log("tasks in canvas mapped ", props)
-                                            return(
-                                          <Task key={task.id} task={task} index={index} myData={props.myData}></Task>
-                                        )})}
-                                    </div>
-                                    {provided.placeholder}
+                    {(
+                        <div className="bg-white overflow-scroll " style={{ height: 500 }} id={"main-canvas"}>
+                            {/* <head> */}
+                            <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
+                            {/* </head> */}
+                            <div className={`p-8 m-2   ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`} >
+                                <div>
+                                    {props.tasks == "" && <div className="mt-12 mt-32 mb-32">
+                                        <h1 className="text-xl text-center">Start Creating a Template by selecting relevent UI Components</h1>
+                                        <h1 className="text-md text-center text-gray-600 mt-5">Drag & drop them here. You can change the default tailwind styles by clicking the change styles button.</h1>
+                                    </div>}
                                 </div>
                             </div>
-                        )}
-                    </Droppable>
+                        </div>
+                    )}
                 </div>
                 <span className="border bg-black" />
             </div>
