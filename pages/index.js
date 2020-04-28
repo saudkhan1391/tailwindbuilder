@@ -117,23 +117,54 @@ const Home = () => {
       console.log("dragable id aaaaaaaaaaaaa:", draggableId)
       console.log("tasks aaaaaaaaaaaaaaaa : ", tasks)
       // let newTasks = { ...tasks, "task-5": { id: uniqueId, content: "Cook dinner 5" } }
-      const newState = {
-        ...initialData, columns: {
-          ...initialData.columns,
-          // [newStart.id]: newStart,
-          [newFinish.id]: newFinish
-        },
-        tasks: tasks
+      if (clickedComponent == "column-1") {
+        const newState = {
+          ...initialData, columns: {
+            ...initialData.columns,
+            // [newStart.id]: newStart,
+            [newFinish.id]: newFinish
+          },
+          tasks: tasks
+        }
+        setCanvasData(newState)
+      }
+      else {
+        const finishTaskids2 = Array.from(finish.taskIds);
+        finishTaskids2.splice(source.index,1);
+        finishTaskids2.splice(destination.index, 0, uniqueId);
+        const newFinish2 = { ...finish, taskIds: finishTaskids2 };
+        const newState2 = {
+          ...initialData, columns: {
+            ...initialData.columns,
+            // [newStart.id]: newStart,
+            [newFinish2.id]: newFinish2
+          },
+          // tasks: tasks
+        }
+        
+        const newTaskIds = Array.from(start.taskIds);
+        newTaskIds.splice(source.index, 1);
+        newTaskIds.splice(destination.index, 0, draggableId);
+        const newColumn = {
+          ...start,
+          taskIds: newTaskIds
+        };
+        const newState = {
+          ...initialData,
+          columns: {
+            ...initialData.columns,
+            [newColumn.id]: newColumn
+          }
+        };
+
+        //
+        setCanvasData(newState2)
       }
 
       console.log("newfinish 1 : ", newFinish);
       // console.log("new tasks 1 : ", newTasks)
-      console.log("nwestate 1 : ", newState)
+      // console.log("nwestate 1 : ", newState)
       console.log("draggable id  : ", draggableId)
-      // var column2 = initialData.columns["column-2"];
-      // column2.taskIds
-      // setInitialData(newState)
-      setCanvasData(newState)
     }
   }
   const sample = () => {

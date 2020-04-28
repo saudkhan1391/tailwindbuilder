@@ -105,7 +105,7 @@ const Home = () => {
     const newState = {
       ...initialData, columns: {
         ...initialData.columns,
-        [newStart.id]: newStart,
+        // [newStart.id]: newStart,
         [newFinish.id]: newFinish
       }
     }
