@@ -10,40 +10,51 @@ export default function Canvas1(props) {
     const [mouseDown, setMouseDown] = useState(false);
     const [currentSize, setCurrentSize] = useState("desktop");
     const [render, reRender] = useState(1);
+    const [test, setTest] = useState("test");
+    var x = 0;
     useEffect(() => {
         resizeDivOnDrag();
+
     }, [render])
     function resizeDivOnDrag() {
-        const BORDER_SIZE = 4;
+        setTest("into the divdrag function called by useefect :" + x + 1);
+        const BORDER_SIZE = 40;
         const panel = document.getElementById("my-canvas");
 
         let m_pos;
         function resize(e) {
+            setTest("into the resize function :" + x + 1);
             const dx = m_pos - e.x;
             m_pos = e.x;
             let CanvasWidthInNum = (parseInt(getComputedStyle(panel, '').width) - 0);
             // if (CanvasWidthInNum > 549 ) {
             if (CanvasWidthInNum > 549 && CanvasWidthInNum < 1290) {
+                setTest("condition true resize function :" + x + 1);
                 panel.style.width = (parseInt(getComputedStyle(panel, '').width) - dx) + "px";
                 reRender(render + 1);
             }
-            if (CanvasWidthInNum > 1290) {
-                (panel.style.width = 1250 + "px")
-                reRender(render + 1);
-            }
-            if (CanvasWidthInNum < 550) {
-                (panel.style.width = 551 + "px")
-            }
+            // else {
+                if (CanvasWidthInNum > 1290) {
+                    (panel.style.width = 1250 + "px")
+                    reRender(render + 1);
+                }
+                if (CanvasWidthInNum < 550) {
+                    (panel.style.width = 551 + "px")
+                }
+            // }
         }
 
         panel.addEventListener("mousedown", function (e) {
+            setTest("into the mousedown event :" + x + 1);
             if (e.offsetX < BORDER_SIZE) {
                 m_pos = e.x;
+                setTest("condition true in mousedown event :" + x + 1);
                 document.addEventListener("mousemove", resize, false);
             }
         }, false);
 
         document.addEventListener("mouseup", function () {
+            setTest("into the mouse up event :" + x + 1);
             document.removeEventListener("mousemove", resize, false);
         }, false);
     }
@@ -63,12 +74,13 @@ export default function Canvas1(props) {
                 return panel.style.width = "1100px"
         }
     }
+
     return (
         // <Container1>
         <div className=" flex justify-center border " id="mydiv">
-
-            <div className="  flex  z-1 fixed border w-3/4 h-11/12 "
-                style={{ top: "13vh", left: "19vw", }}
+            {/* <h1 className="text-4xl">{test}</h1> */}
+            <div className="flex z-1 fixed border w-3/4 h-11/12 resize-x overflow-auto max-w-screen-xl"
+                style={{ top: "13vh", left: "19vw",minWidth:"550px" }}
                 // style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} 
                 id="my-canvas" >
                 <div className=" border border-solid border-gray-400 flex flex-col w-full "  >
@@ -94,7 +106,7 @@ export default function Canvas1(props) {
                                 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
                                 <div className={`p-8 m-2   ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`} ref={provided.innerRef} {...provided.droppalbeProps}>
                                     <div>
-                                        {props.tasks == "" && <div className="mt-12 mt-32 mb-32">
+                                        {props.tasks == "" && <div className="mt-12 mt-32 mb-32 ">
                                             <h1 className="text-xl text-center">Start Creating a Template by selecting relevent UI Components</h1>
                                             <h1 className="text-md text-center text-gray-600 mt-5">Drag & drop them here. You can change the default tailwind styles by clicking the change styles button.</h1>
                                         </div>}
@@ -111,16 +123,13 @@ export default function Canvas1(props) {
                         )}
                     </Droppable>
                 </div>
-                <span className="border bg-black" />
+                {/* <span className="myCursor border bg-gray-500 w-2 " /> */}
             </div>
 
             <style jsx>{`
-            #my-canvas span {
-                content: " ";
-                background-color: #ccc;
-                width: 9px;
+            .myCursor {
                 cursor: w-resize;
-            }  
+            }
              `}</style>
         </div>
         // </Container1>

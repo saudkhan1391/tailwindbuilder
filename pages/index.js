@@ -8,12 +8,24 @@ import Column from "../components/DragLogic/column";
 import { DragDropContext } from "react-beautiful-dnd-next";
 import FileSaver from 'file-saver';
 import Canvas1 from '../components/DragLogic/Canvas1';
+import JSZip from 'jszip';
 const Home = () => {
   function download() {
-    var pageHTML = window.document.getElementById('main-canvas').outerHTML;
-    let blob = new Blob([pageHTML], { type: 'data:attachment/text,' });
-    // let blob = new Blob([window.hyee.innerHTML], { type: 'data:attachment/text,' });
-    saveAs(blob, "helloworld.html");
+    var pageHTML = window.document.getElementById('main-canvas').innerHTML;
+    // let blob = new Blob([pageHTML], { type: 'data:attachment/text,' });
+    // saveAs(blob, "helloworld.html");
+
+    // var blob = new Blob(["sdsdds"], { type: "application/zip" });
+    // saveAs(blob, "data.zip");
+
+    var zip = new JSZip();
+    zip.file("Helloh.html", pageHTML);
+
+    zip.generateAsync({ type: "blob" })
+      .then(function (content) {
+        saveAs(content, "example.zip");
+      });
+
   }
 
   const [selectedOption, setSelectedOption] = useState("");
@@ -188,6 +200,7 @@ const Home = () => {
     return <Canvas1 key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
   }
   return <div className="bg-gray-100 h-screen" style={selectedOption ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
+    {/* <div class="resize-x border  h-32 w-64 bg-gray-500 overflow-auto">s</div> */}
     <DragDropContext
 
       onDragEnd={result => {
@@ -196,6 +209,7 @@ const Home = () => {
       onDragStart={(result) => {
         console.log("ondrag start ", result);
         setClickedComponent(result.source.droppableId);
+        setSelectedOption("")
       }}
     // onMouseDown={(a) => { console.log("on mouse donw", a) }}
     >
@@ -240,13 +254,14 @@ const Home = () => {
               <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Grid</a>
               <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Pagination</a>
             </div>
-            {/* <div className="h-32 w-10  bg-black" >sdsd </div> */}
           </div>
-          {selectedOption && <div className=" bg-gray-100 h-screen z-10" >
+          {<div className={selectedOption ? "bg-gray-100 h-screen z-10 w-3/4 duration-500" : "overflow-hidden w-0 duration-500 "}>
+            {/* {selectedOption && <div className=" bg-gray-100 h-screen z-10" > */}
             <div className="h-5 " />
-            <h5 className="text-center text-grey-100 text-lg mt-5 mb-5">Select a component and drag it to the canvas</h5>
+            {selectedOption && <h5 className="text-center text-grey-100 text-lg mt-5 mb-5">Select a component and drag it to the canvas</h5>}
             {/* {menuDetails(selectedOption)} */}
-            {draggableComponnents()}
+            {<div > {draggableComponnents()}</div>}
+            {/* {<div className={!selectedOption && "opacity-0"}> {draggableComponnents()}</div>} */}
           </div>}
         </div>
 
