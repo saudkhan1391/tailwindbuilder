@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@atlaskit/css-reset": "^5.0.10",
+    "@zeit/next-css": "^1.0.1",
     "file-saver": "^2.0.2",
     "jszip": "^3.4.0",
     "next": "9.3.5",

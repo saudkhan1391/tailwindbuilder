@@ -3,6 +3,7 @@ import Task from "./Tasks";
 import { Droppable, Draggable } from "react-beautiful-dnd-next";
 import { AiOutlineMobile, AiOutlineDesktop, AiOutlineTablet } from 'react-icons/ai';
 export default function Canvas1(props) {
+    let { FileName, setFileName } = props;
     const [canvasWidth, setCanvasWidth] = useState(1100);
     const [variableTop, setVariableTop] = useState(100);
     const [variableLeft, setVariableLeft] = useState(330);
@@ -34,13 +35,13 @@ export default function Canvas1(props) {
                 reRender(render + 1);
             }
             // else {
-                if (CanvasWidthInNum > 1290) {
-                    (panel.style.width = 1250 + "px")
-                    reRender(render + 1);
-                }
-                if (CanvasWidthInNum < 550) {
-                    (panel.style.width = 551 + "px")
-                }
+            if (CanvasWidthInNum > 1290) {
+                (panel.style.width = 1250 + "px")
+                reRender(render + 1);
+            }
+            if (CanvasWidthInNum < 550) {
+                (panel.style.width = 551 + "px")
+            }
             // }
         }
 
@@ -79,8 +80,9 @@ export default function Canvas1(props) {
         // <Container1>
         <div className=" flex justify-center border " id="mydiv">
             {/* <h1 className="text-4xl">{test}</h1> */}
-            <div className="flex z-1 fixed border w-3/4 h-11/12 resize-x overflow-auto max-w-screen-xl"
-                style={{ top: "13vh", left: "19vw",minWidth:"550px" }}
+            {/* <div className="flex z-1 fixed border w-3/4 h-11/12 resize-x overflow-auto md:max-w-screen-xl sm:max-w-screen-xl lg:max-w-screen-xl " */}
+            <div className="flex z-0 absolute border w-3/4 h-11/12 resize-x overflow-auto max-w-screen-xl"
+                style={{ top: "13vh", left: "19vw", minWidth: "550px" }}
                 // style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} 
                 id="my-canvas" >
                 <div className=" border border-solid border-gray-400 flex flex-col w-full "  >
@@ -91,7 +93,8 @@ export default function Canvas1(props) {
                             <div className="w-5 bg-gray-400 h-5 rounded-full" />
                         </div>
                         <div className="bg-white w-64 h-8 flex justify-center items-center border ml-2 mr-2">
-                            <h4>index.html</h4>
+                            {/* <h4>index.html</h4> */}
+                            <input onChange={(text) => { setFileName(text.target.value) }} placeholder="FIle Name"  className="h-full w-full text-center" />
                         </div>
                         <div className="flex w-24 justify-between items-center">
                             <AiOutlineDesktop size={26} onClick={() => { changeScreenSize("desktop") }} className={`${currentSize == "desktop" && "bg-gray-300"}`} />

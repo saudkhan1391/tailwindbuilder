@@ -1,15 +1,24 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import uuid from 'uuid/v4';
 import Head from 'next/head'
 import Sample1, { Sample2 } from '../components/DraggableComponents/sample1'
-
 import { initialData2 } from "../components/DragLogic/initial_data";
 import Column from "../components/DragLogic/column";
 import { DragDropContext } from "react-beautiful-dnd-next";
 import FileSaver from 'file-saver';
 import Canvas1 from '../components/DragLogic/Canvas1';
 import JSZip from 'jszip';
+// import tailwindMinCss from "../node_modules/tailwindcss/dist/tailwind.min.css"
 const Home = () => {
+  useEffect(() => {
+    fetch("../static/tailwind.min.css").then(res => res.text())
+      .then(res => { console.log("res", res); setMinCssFile(res) })
+  }, [])
+  const [selectedOption, setSelectedOption] = useState("");
+  const [clickedComponent, setClickedComponent] = useState("");
+  const [FileName, setFileName] = useState("Index.zip");
+  const [minCssFile, setMinCssFile] = useState("Index.zip");
+
   function download() {
     var pageHTML = window.document.getElementById('main-canvas').innerHTML;
     // let blob = new Blob([pageHTML], { type: 'data:attachment/text,' });
@@ -17,19 +26,16 @@ const Home = () => {
 
     // var blob = new Blob(["sdsdds"], { type: "application/zip" });
     // saveAs(blob, "data.zip");
-
     var zip = new JSZip();
-    zip.file("Helloh.html", pageHTML);
+    zip.file("File.html", pageHTML);
+    zip.file("tailwind.min.css", minCssFile);
+    // zip.file("Hello.css", MyTailwind);
 
     zip.generateAsync({ type: "blob" })
       .then(function (content) {
-        saveAs(content, "example.zip");
+        saveAs(content, FileName);
       });
-
   }
-
-  const [selectedOption, setSelectedOption] = useState("");
-  const [clickedComponent, setClickedComponent] = useState("");
   const menuDetails = (selectedOption) => {
     switch (selectedOption) {
       case "Navigations":
@@ -197,9 +203,10 @@ const Home = () => {
     })
     console.log("filter tasks ", filteredTasks)
     console.log("canvas columns task Ids", column.taskIds)
-    return <Canvas1 key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+    return <Canvas1 key={column.id} column={column} tasks={filteredTasks} myData={sample} FileName={FileName} setFileName={setFileName} />;
   }
-  return <div className="bg-gray-100 h-screen" style={selectedOption ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
+  return <div className="bg-gray-100 h-screen " style={selectedOption ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
+    {selectedOption && <div className="bg-gray-900 z-10 absolute w-screen h-screen opacity-75" />}
     {/* <div class="resize-x border  h-32 w-64 bg-gray-500 overflow-auto">s</div> */}
     <DragDropContext
 
@@ -218,9 +225,9 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Nav /> */}
-      <div onMouseLeave={() => { setSelectedOption("") }} className="flex w-2/5 " >
+      <div onMouseLeave={() => { setSelectedOption("") }} className="flex w-2/5" >
         <div className="flex" >
-          <div className="flex flex-col w-56 bg-gray-100 h-screen" >
+          <div className="flex flex-col w-56 bg-gray-100 h-screen z-20" >
             <div className=" border border-b-0 border-gray-400 bg-grey">
               <img src="/logo.png" className="w-32 m-6 " />
             </div>
@@ -255,7 +262,7 @@ const Home = () => {
               <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Pagination</a>
             </div>
           </div>
-          {<div className={selectedOption ? "bg-gray-100 h-screen z-10 w-3/4 duration-500" : "overflow-hidden w-0 duration-500 "}>
+          {<div className={selectedOption ? "bg-gray-100 h-screen z-10 w-3/4 " : "overflow-hidden w-0  "}>
             {/* {selectedOption && <div className=" bg-gray-100 h-screen z-10" > */}
             <div className="h-5 " />
             {selectedOption && <h5 className="text-center text-grey-100 text-lg mt-5 mb-5">Select a component and drag it to the canvas</h5>}
