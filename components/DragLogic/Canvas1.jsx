@@ -10,16 +10,17 @@ export default function Canvas1(props) {
     const [mouseMoving, setMouseMoving] = useState(false);
     const [mouseDown, setMouseDown] = useState(false);
     const [currentSize, setCurrentSize] = useState("desktop");
+    const [Preview, setPreview] = useState(true);
     const [render, reRender] = useState(1);
     const [test, setTest] = useState("test");
     var x = 0;
     useEffect(() => {
-        resizeDivOnDrag();
+        // resizeDivOnDrag();
 
     }, [render])
     function resizeDivOnDrag() {
         setTest("into the divdrag function called by useefect :" + x + 1);
-        const BORDER_SIZE = 40;
+        const BORDER_SIZE = 4;
         const panel = document.getElementById("my-canvas");
 
         let m_pos;
@@ -82,7 +83,7 @@ export default function Canvas1(props) {
             {/* <h1 className="text-4xl">{test}</h1> */}
             {/* <div className="flex z-1 fixed border w-3/4 h-11/12 resize-x overflow-auto md:max-w-screen-xl sm:max-w-screen-xl lg:max-w-screen-xl " */}
             <div className="flex z-0  border w-3/4 h-11/12 resize-x overflow-auto max-w-screen-xl"
-                style={{  minWidth: "550px" }}
+                style={{ minWidth: "550px" }}
                 // style={{ top: "13vh", left: "19vw", minWidth: "550px" }}
                 id="my-canvas" >
                 <div className=" border border-solid border-gray-400 flex flex-col w-full "  >
@@ -92,9 +93,16 @@ export default function Canvas1(props) {
                             <div className="w-5 bg-gray-400 h-5 rounded-full" />
                             <div className="w-5 bg-gray-400 h-5 rounded-full" />
                         </div>
+                        <div className="w-40" />
                         <div className="bg-white w-64 h-8 flex justify-center items-center border ml-2 mr-2">
                             {/* <h4>index.html</h4> */}
-                            <input onChange={(text) => { setFileName(text.target.value) }} placeholder="FIle Name"  className="h-full w-full text-center" />
+                            <input onChange={(text) => { setFileName(text.target.value) }} placeholder="FIle Name" className="h-full w-full text-center" />
+                        </div>
+                        <div className="flex w-40  justify-around items-center">
+                            <h1 onClick={() => { setPreview(true) }}
+                                className={` text-xl cursor-pointer ${Preview ? "text-blue-600 " : "text-gray-600"} `}>Preview</h1>
+                            <h1 onClick={() => { setPreview(false) }}
+                                className={` text-xl cursor-pointer ${!Preview ? "text-blue-600 " : "text-gray-600"} `}>Code</h1>
                         </div>
                         <div className="flex w-24 justify-between items-center">
                             <AiOutlineDesktop size={26} onClick={() => { changeScreenSize("desktop") }} className={`${currentSize == "desktop" && "bg-gray-300"}`} />
@@ -103,28 +111,40 @@ export default function Canvas1(props) {
                         </div>
                     </div>
                     <Droppable droppableId={props.column.id}>
-                        {provided => (
-                            <div className="bg-white overflow-scroll border h-full " style={{ height: "70vh" }} id={"main-canvas"}>
-                                {/* <div className="bg-white overflow-scroll border " style={{ height: 500 }} id={"main-canvas"}> */}
-                                {/* <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link> */}
-                                <link href="./tailwind.min.css" rel="stylesheet"></link>
-                                <div className={`p-8 m-2   ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`} ref={provided.innerRef} {...provided.droppalbeProps}>
-                                    <div>
-                                        {props.tasks == "" && <div className="mt-12 mt-32 mb-32 ">
-                                            <h1 className="text-xl text-center">Start Creating a Template by selecting relevent UI Components</h1>
-                                            <h1 className="text-md text-center text-gray-600 mt-5">Drag & drop them here. You can change the default tailwind styles by clicking the change styles button.</h1>
-                                        </div>}
-                                        {props.tasks.map((task, index) => {
-                                            console.log("tasks in canvas mapped ", props)
-                                            return (
-                                                <Task key={task.id} task={task} index={index} myData={props.myData}></Task>
-                                            )
-                                        })}
+                        {provided => {
+                            return (
+                                <div>
+                                    {/* {!Preview && <div className="z-30 absolute bg-gray-600"style={{ height: "70vh" }} > code </div>} */}
+                                    <div className="bg-white overflow-scroll border h-full " style={{ height: "70vh" }} id={"main-canvas"}>
+                                        {/* <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link> */}
+                                        <link href="./tailwind.min.css" rel="stylesheet"></link>
+                                        <div className={`p-8 m-2   ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`}
+                                            ref={provided.innerRef} {...provided.droppalbeProps}>
+                                            <div>
+                                                {props.tasks == "" && <div className="mt-12 mt-32 mb-32 ">
+                                                    <h1 className="text-xl text-center">Start Creating a Template by selecting relevent UI Components</h1>
+                                                    <h1 className="text-md text-center text-gray-600 mt-5">Drag & drop them here. You can change the default tailwind styles by clicking the change styles button.</h1>
+                                                </div>}
+                                                {props.tasks.map((task, index) => {
+                                                    // console.log("tasks in canvas mapped ", props)
+                                                    if (Preview)
+                                                        return (
+                                                            <Task key={task.id} task={task} index={index} myData={props.myData} Preview={Preview}></Task>
+                                                        )
+                                                    else return (
+                                                        <div className="mb-2">
+                                                            <code className="text-xl text-blue-500">{document.getElementById('task_id').innerHTML} </code>
+                                                        </div>
+                                                    )
+                                                })}
+
+                                            </div>
+                                            {provided.placeholder}
+                                        </div>
                                     </div>
-                                    {provided.placeholder}
                                 </div>
-                            </div>
-                        )}
+                            )
+                        }}
                     </Droppable>
                 </div>
                 {/* <span className="myCursor border bg-gray-500 w-2 " /> */}

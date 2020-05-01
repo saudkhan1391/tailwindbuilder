@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd-next";
 export default function Tasks(props) {
-  // console.log(props, "props of tasks ");
+let {Preview} = props;
   return (
     <div >
       <Draggable draggableId={props.task.id} index={props.index} >
@@ -10,7 +10,7 @@ export default function Tasks(props) {
           // console.log("Provided : ", provided)
           // console.log("snapshot : ", snapshot)
           return (
-            <div>
+            <div id="task_id">
               <div className={`p-8 m-2 border  ${snapshot.isDragging ? "bg-blue-200" : "bg-white"}`}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
