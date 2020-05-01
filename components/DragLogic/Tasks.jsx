@@ -22,13 +22,13 @@ export default function Tasks(props) {
                 {props.myData()}
                 {props.task.content}
               </div>
-              {snapshot.isDragging && (
+              {/* {snapshot.isDragging && (
                 <div className={`p-8 m-2 border  ${snapshot.isDragging=="4ever" ? "bg-blue-200" : "bg-white"}`} >
                   <h4 className="text-red-600 font-bold text-lg text-center">Code Block</h4>
                   {props.myData()}
                   {props.task.content}
                 </div>
-              )}
+              )} */}
 
             </div>
           )
