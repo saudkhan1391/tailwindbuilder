@@ -272,7 +272,7 @@ const Home = () => {
           </div>}
         </div>
 
-        <div className="flex absolute w-full justify-end">
+        <div className="flex absolute z-20 w-full justify-end">
           <button className="bg-blue-600 h-12 rounded w-32  mt-5 mr-10 text-white font-bold"
             onClick={() => { download() }}
           >
