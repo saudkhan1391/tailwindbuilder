@@ -82,6 +82,7 @@ export default function Canvas1(props) {
             {/* <h1 className="text-4xl">{test}</h1> */}
             {/* <div className="flex z-1 fixed border w-3/4 h-11/12 resize-x overflow-auto md:max-w-screen-xl sm:max-w-screen-xl lg:max-w-screen-xl " */}
             <div className="flex z-0  border w-3/4 h-11/12 resize-x overflow-auto max-w-screen-xl"
+                style={{  minWidth: "550px" }}
                 // style={{ top: "13vh", left: "19vw", minWidth: "550px" }}
                 id="my-canvas" >
                 <div className=" border border-solid border-gray-400 flex flex-col w-full "  >
