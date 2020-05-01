@@ -78,12 +78,11 @@ export default function Canvas1(props) {
 
     return (
         // <Container1>
-        <div className=" flex justify-center border " id="mydiv">
+        <div className=" flex justify-center items-center w-screen h-screen z-1 pl-32 absolute" id="mydiv">
             {/* <h1 className="text-4xl">{test}</h1> */}
             {/* <div className="flex z-1 fixed border w-3/4 h-11/12 resize-x overflow-auto md:max-w-screen-xl sm:max-w-screen-xl lg:max-w-screen-xl " */}
-            <div className="flex z-0 absolute border w-3/4 h-11/12 resize-x overflow-auto max-w-screen-xl"
-                style={{ top: "13vh", left: "19vw", minWidth: "550px" }}
-                // style={{ top: variableTop, left: variableLeft, width: canvasWidth, }} 
+            <div className="flex z-0  border w-3/4 h-11/12 resize-x overflow-auto max-w-screen-xl"
+                // style={{ top: "13vh", left: "19vw", minWidth: "550px" }}
                 id="my-canvas" >
                 <div className=" border border-solid border-gray-400 flex flex-col w-full "  >
                     <div className="bg-gray-100 h-12 border-b border-gray-400 justify-between flex items-center pl-4 pr-4">

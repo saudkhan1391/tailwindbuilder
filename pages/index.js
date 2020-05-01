@@ -12,13 +12,14 @@ import JSZip from 'jszip';
 const Home = () => {
   useEffect(() => {
     fetch("../static/tailwind.min.css").then(res => res.text())
-      .then(res => { console.log("res", res); setMinCssFile(res) })
+      .then(res => { console.log("res"); setMinCssFile(res) })
   }, [])
   const [selectedOption, setSelectedOption] = useState("");
   const [clickedComponent, setClickedComponent] = useState("");
   const [FileName, setFileName] = useState("Index.zip");
   const [minCssFile, setMinCssFile] = useState("Index.zip");
-
+  const [initialData, setInitialData] = useState(initialData2);
+  const [canvasData, setCanvasData] = useState(initialData2);
   function download() {
     var pageHTML = window.document.getElementById('main-canvas').innerHTML;
     // let blob = new Blob([pageHTML], { type: 'data:attachment/text,' });
@@ -67,8 +68,7 @@ const Home = () => {
         return (<div>Null</div>)
     }
   }
-  const [initialData, setInitialData] = useState(initialData2);
-  const [canvasData, setCanvasData] = useState(initialData2);
+  
   const onDragEnd = result => {
     console.log(result, "result 1");
     const { destination, source, draggableId } = result;
@@ -227,7 +227,7 @@ const Home = () => {
       {/* <Nav /> */}
       <div onMouseLeave={() => { setSelectedOption("") }} className="flex w-2/5" >
         <div className="flex" >
-          <div className="flex flex-col w-56 bg-gray-100 h-screen z-20" >
+          <div className="flex flex-col bg-gray-100 h-screen z-20" >
             <div className=" border border-b-0 border-gray-400 bg-grey">
               <img src="/logo.png" className="w-32 m-6 " />
             </div>
@@ -279,9 +279,9 @@ const Home = () => {
             Export Project
           </button>
         </div>
-        <div className="flex  flex-col " ref={(iref) => window.hyee = iref} id="abc" >
+        {/* <div className="flex  flex-col " ref={(iref) => window.hyee = iref} id="abc" > */}
           {canvas()}
-        </div>
+        {/* </div> */}
       </div>
     </DragDropContext>
   </div>
