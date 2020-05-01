@@ -106,7 +106,8 @@ export default function Canvas1(props) {
                         {provided => (
                             <div className="bg-white overflow-scroll border h-full " style={{ height: "70vh" }} id={"main-canvas"}>
                                 {/* <div className="bg-white overflow-scroll border " style={{ height: 500 }} id={"main-canvas"}> */}
-                                <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
+                                {/* <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link> */}
+                                <link href="./tailwind.min.css" rel="stylesheet"></link>
                                 <div className={`p-8 m-2   ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`} ref={provided.innerRef} {...provided.droppalbeProps}>
                                     <div>
                                         {props.tasks == "" && <div className="mt-12 mt-32 mb-32 ">
