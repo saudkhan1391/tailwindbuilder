@@ -149,7 +149,7 @@ export default function Canvas1(props) {
                                                     else {
 
                                                         return (
-                                                            <div className="mb-2 h-0 overflow-hidden" id="allTasks">
+                                                            <div className=" h-0 overflow-hidden" id="allTasks">
                                                                 <Tasks2 key={task.id} task={task} index={index} myData={props.myData} Preview={Preview} setTasks2Loaded={setTasks2Loaded} reRender={reRender} render={render}></Tasks2>
                                                                 {/* <code className="text-xl text-blue-600">{document.getElementById('task_id2').innerHTML} </code> */}
                                                             </div>
@@ -159,7 +159,7 @@ export default function Canvas1(props) {
                                                 {/* {!Preview && tasks2Loaded && <code className="text-xl text-blue-600">{document.getElementById("allTasks").outerHTML} </code>} */}
                                             </div>
                                             {!Preview && tasks2Loaded && <code className="text-xl text-blue-600">{document.getElementById("test3").outerHTML} </code>}
-                                            {/* {!Preview && <code className="text-xl text-blue-600">{document.getElementById("test3").outerHTML} </code>} */}
+                                            {/* {!Preview && document.getElementById("test3").outerHTML} */}
                                             {provided.placeholder}
                                         </div>
                                     </div>
