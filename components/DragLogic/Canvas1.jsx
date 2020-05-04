@@ -105,7 +105,7 @@ export default function Canvas1(props) {
                                 className={` text-xl cursor-pointer hover:bg-gray-300 ${Preview ? "text-blue-600 " : "text-gray-600"} `}>Preview</h1>
                             <h1 onClick={() => { setPreview(false) }}
                                 className={` text-xl cursor-pointer hover:bg-gray-300 ${!Preview ? "text-blue-600 " : "text-gray-600"} `}>Code</h1>
-                            {tasks2Loaded && <div onClick={() => {
+                            {!Preview && tasks2Loaded && <div onClick={() => {
                                 const panel = document.getElementById("my-canvas");
                                 const textField = document.createElement('textarea');
                                 textField.style.height = "1px";
