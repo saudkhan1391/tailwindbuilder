@@ -16,7 +16,7 @@ const Home = () => {
   }, [])
   const [selectedOption, setSelectedOption] = useState("");
   const [clickedComponent, setClickedComponent] = useState("");
-  const [FileName, setFileName] = useState("Index.zip");
+  const [FileName, setFileName] = useState("Index.html");
   const [minCssFile, setMinCssFile] = useState("Index.zip");
   const [initialData, setInitialData] = useState(initialData2);
   const [canvasData, setCanvasData] = useState(initialData2);
@@ -28,13 +28,13 @@ const Home = () => {
     // var blob = new Blob(["sdsdds"], { type: "application/zip" });
     // saveAs(blob, "data.zip");
     var zip = new JSZip();
-    zip.file("File.html", pageHTML);
+    zip.file(FileName, pageHTML);
     zip.file("tailwind.min.css", minCssFile);
     // zip.file("Hello.css", MyTailwind);
 
     zip.generateAsync({ type: "blob" })
       .then(function (content) {
-        saveAs(content, FileName);
+        saveAs(content, "ProjectTB.zip");
       });
   }
   const menuDetails = (selectedOption) => {

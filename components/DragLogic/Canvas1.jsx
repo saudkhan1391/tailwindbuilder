@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Task from "./Tasks";
+import Task, { Tasks2 } from "./Tasks";
 import { Droppable, Draggable } from "react-beautiful-dnd-next";
-import { AiOutlineMobile, AiOutlineDesktop, AiOutlineTablet } from 'react-icons/ai';
+import { AiOutlineMobile, AiOutlineDesktop, AiOutlineTablet, FiCopy, AiOutlineCopy } from 'react-icons/ai';
 export default function Canvas1(props) {
     let { FileName, setFileName } = props;
     const [canvasWidth, setCanvasWidth] = useState(1100);
@@ -13,11 +13,12 @@ export default function Canvas1(props) {
     const [Preview, setPreview] = useState(true);
     const [render, reRender] = useState(1);
     const [test, setTest] = useState("test");
+    const [tasks2Loaded, setTasks2Loaded] = useState(false);
     var x = 0;
     useEffect(() => {
         // resizeDivOnDrag();
-
-    }, [render])
+        reRender(render)
+    }, [render, Preview, tasks2Loaded])
     function resizeDivOnDrag() {
         setTest("into the divdrag function called by useefect :" + x + 1);
         const BORDER_SIZE = 4;
@@ -96,13 +97,26 @@ export default function Canvas1(props) {
                         <div className="w-40" />
                         <div className="bg-white w-64 h-8 flex justify-center items-center border ml-2 mr-2">
                             {/* <h4>index.html</h4> */}
-                            <input onChange={(text) => { setFileName(text.target.value) }} placeholder="FIle Name" className="h-full w-full text-center" />
+                            <input onChange={(text) => { setFileName(text.target.value) }} value={FileName}
+                                placeholder="FIle Name" className="h-full w-full text-center" />
                         </div>
-                        <div className="flex w-40  justify-around items-center">
+                        <div className="flex w-48 justify-around items-center">
                             <h1 onClick={() => { setPreview(true) }}
-                                className={` text-xl cursor-pointer ${Preview ? "text-blue-600 " : "text-gray-600"} `}>Preview</h1>
+                                className={` text-xl cursor-pointer hover:bg-gray-300 ${Preview ? "text-blue-600 " : "text-gray-600"} `}>Preview</h1>
                             <h1 onClick={() => { setPreview(false) }}
-                                className={` text-xl cursor-pointer ${!Preview ? "text-blue-600 " : "text-gray-600"} `}>Code</h1>
+                                className={` text-xl cursor-pointer hover:bg-gray-300 ${!Preview ? "text-blue-600 " : "text-gray-600"} `}>Code</h1>
+                            <div onClick={() => {
+                                const panel = document.getElementById("my-canvas");
+                                const textField = document.createElement('textarea');
+                                textField.style.height= "0px";
+                                textField.style.overflow="hidden"
+                                textField.innerText = panel.outerHTML;
+                                document.body.appendChild(textField);
+                                textField.select();
+                                document.execCommand('copy');
+                                alert("Copied");
+                            }}
+                                className="cursor-pointer hover:bg-gray-400" >  <AiOutlineCopy size={24} /> </div>
                         </div>
                         <div className="flex w-24 justify-between items-center">
                             <AiOutlineDesktop size={26} onClick={() => { changeScreenSize("desktop") }} className={`${currentSize == "desktop" && "bg-gray-300"}`} />
@@ -120,7 +134,7 @@ export default function Canvas1(props) {
                                         <link href="./tailwind.min.css" rel="stylesheet"></link>
                                         <div className={`p-8 m-2   ${props.isDraggingOver ? "bg-blue-400" : "bg-white"}`}
                                             ref={provided.innerRef} {...provided.droppalbeProps}>
-                                            <div>
+                                            <div id="test3">
                                                 {props.tasks == "" && <div className="mt-12 mt-32 mb-32 ">
                                                     <h1 className="text-xl text-center">Start Creating a Template by selecting relevent UI Components</h1>
                                                     <h1 className="text-md text-center text-gray-600 mt-5">Drag & drop them here. You can change the default tailwind styles by clicking the change styles button.</h1>
@@ -129,16 +143,22 @@ export default function Canvas1(props) {
                                                     // console.log("tasks in canvas mapped ", props)
                                                     if (Preview)
                                                         return (
-                                                            <Task key={task.id} task={task} index={index} myData={props.myData} Preview={Preview}></Task>
+                                                            <Task key={task.id} task={task} index={index} myData={props.myData} Preview={Preview} reRender={reRender} render={render} ></Task>
                                                         )
-                                                    else return (
-                                                        <div className="mb-2">
-                                                            <code className="text-xl text-blue-500">{document.getElementById('task_id').innerHTML} </code>
-                                                        </div>
-                                                    )
-                                                })}
+                                                    else {
 
+                                                        return (
+                                                            <div className="mb-2 h-0 overflow-hidden" id="allTasks">
+                                                                <Tasks2 key={task.id} task={task} index={index} myData={props.myData} Preview={Preview} setTasks2Loaded={setTasks2Loaded} reRender={reRender} render={render}></Tasks2>
+                                                                {/* <code className="text-xl text-blue-600">{document.getElementById('task_id2').innerHTML} </code> */}
+                                                            </div>
+                                                        )
+                                                    }
+                                                })}
+                                                {/* {!Preview && tasks2Loaded && <code className="text-xl text-blue-600">{document.getElementById("allTasks").outerHTML} </code>} */}
                                             </div>
+                                            {!Preview && tasks2Loaded && <code className="text-xl text-blue-600">{document.getElementById("test3").outerHTML} </code>}
+                                            {/* {!Preview && <code className="text-xl text-blue-600">{document.getElementById("test3").outerHTML} </code>} */}
                                             {provided.placeholder}
                                         </div>
                                     </div>
