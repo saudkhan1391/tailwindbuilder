@@ -108,8 +108,8 @@ export default function Canvas1(props) {
                             {tasks2Loaded && <div onClick={() => {
                                 const panel = document.getElementById("my-canvas");
                                 const textField = document.createElement('textarea');
-                                // textField.style.height = "0px";
-                                // textField.style.overflow = "hidden"
+                                textField.style.height = "1px";
+                                textField.style.overflow = "hidden"
                                 textField.innerText = panel.outerHTML;
                                 document.body.appendChild(textField);
                                 textField.select();
