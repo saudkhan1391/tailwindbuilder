@@ -105,18 +105,19 @@ export default function Canvas1(props) {
                                 className={` text-xl cursor-pointer hover:bg-gray-300 ${Preview ? "text-blue-600 " : "text-gray-600"} `}>Preview</h1>
                             <h1 onClick={() => { setPreview(false) }}
                                 className={` text-xl cursor-pointer hover:bg-gray-300 ${!Preview ? "text-blue-600 " : "text-gray-600"} `}>Code</h1>
-                            <div onClick={() => {
+                            {tasks2Loaded && <div onClick={() => {
                                 const panel = document.getElementById("my-canvas");
                                 const textField = document.createElement('textarea');
-                                textField.style.height= "0px";
-                                textField.style.overflow="hidden"
+                                // textField.style.height = "0px";
+                                // textField.style.overflow = "hidden"
                                 textField.innerText = panel.outerHTML;
                                 document.body.appendChild(textField);
                                 textField.select();
                                 document.execCommand('copy');
                                 alert("Copied");
                             }}
-                                className="cursor-pointer hover:bg-gray-400" >  <AiOutlineCopy size={24} /> </div>
+                                className="cursor-pointer hover:bg-gray-400" >  <AiOutlineCopy size={24} />
+                            </div>}
                         </div>
                         <div className="flex w-24 justify-between items-center">
                             <AiOutlineDesktop size={26} onClick={() => { changeScreenSize("desktop") }} className={`${currentSize == "desktop" && "bg-gray-300"}`} />
