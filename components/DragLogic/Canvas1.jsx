@@ -96,7 +96,6 @@ export default function Canvas1(props) {
                         </div>
                         <div className="w-40" />
                         <div className="bg-white w-64 h-8 flex justify-center items-center border ml-2 mr-2">
-                            {/* <h4>index.html</h4> */}
                             <input onChange={(text) => { setFileName(text.target.value) }} value={FileName}
                                 placeholder="FIle Name" className="h-full w-full text-center" />
                         </div>
