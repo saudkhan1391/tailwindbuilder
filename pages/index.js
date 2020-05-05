@@ -188,7 +188,7 @@ const Home = () => {
     }
     if(selectedOption=="Headers"){
       const column = initialData.columns["column-1"];
-    var filteredTasks= [initialData.tasks["task-4"]]
+    var filteredTasks= [initialData.tasks["task-4"],initialData.tasks["task-5"]]
     return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
     }
     else{
