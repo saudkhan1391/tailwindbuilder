@@ -79,7 +79,7 @@ export default function Canvas1(props) {
     }
 
     return (
-        // <Container1>
+        /// <Container1>
         <div className=" flex justify-center items-center w-screen h-screen z-1 pl-32 absolute" id="mydiv">
             {/* <h1 className="text-4xl">{test}</h1> */}
             {/* <div className="flex z-1 fixed border w-3/4 h-11/12 resize-x overflow-auto md:max-w-screen-xl sm:max-w-screen-xl lg:max-w-screen-xl " */}
