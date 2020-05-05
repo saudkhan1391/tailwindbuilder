@@ -6,17 +6,21 @@ export default function Tasks(props) {
   let { Preview, reRender, render } = props;
   useEffect(() => {
     // reRender(render + 1)
-  }, [Preview, render])
+  }, [Preview, render]);
+  const Container3 = styled.div`
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+  padding: 8px;
+  margin-bottom: 8px;
+  background-color: ${props => (props.isDragging ? 'lightgreen': 'yellow')}
+`;
   return (
     <div >
       <Draggable draggableId={props.task.id} index={props.index} >
         {(provided, snapshot) => {
-          // console.log("Provided : ", provided)
-          // console.log("snapshot : ", snapshot)
-          //  reRender(render)
           return (
             <div id="task_id">
-              <div className={`p-8 m-2 border  ${snapshot.isDragging ? "bg-blue-200" : "bg-white"}`}
+              <Container3 className={`p-8 m-2 border  ${snapshot.isDragging ? "bg-blue-200" : "bg-white"}`}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
                 ref={provided.innerRef}
@@ -26,7 +30,7 @@ export default function Tasks(props) {
                 <h4 className="text-red-600 font-bold text-lg text-center">Code Block</h4>
                 {props.myData()}
                 {props.task.content}
-              </div>
+              </Container3>
               {/* {snapshot.isDragging && (
                 <div className={`p-8 m-2 border  ${snapshot.isDragging=="4ever" ? "bg-blue-200" : "bg-white"}`} >
                   <h4 className="text-red-600 font-bold text-lg text-center">Code Block</h4>
