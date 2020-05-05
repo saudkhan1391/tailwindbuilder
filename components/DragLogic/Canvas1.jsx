@@ -140,7 +140,6 @@ export default function Canvas1(props) {
                                                     <h1 className="text-md text-center text-gray-600 mt-5">Drag & drop them here. You can change the default tailwind styles by clicking the change styles button.</h1>
                                                 </div>}
                                                 {props.tasks.map((task, index) => {
-                                                    // console.log("tasks in canvas mapped ", props)
                                                     if (Preview)
                                                         return (
                                                             <Task key={task.id} task={task} index={index} myData={props.myData} Preview={Preview} reRender={reRender} render={render} ></Task>
