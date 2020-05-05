@@ -1,15 +1,23 @@
+import FeatureSection from "../DraggableComponents/FeatureSections";
+import HeroSections from "../DraggableComponents/HeroSections";
+import Avatars from "../DraggableComponents/Avatars";
+import CTAsection from "../DraggableComponents/CTAsection";
+import Dashboard from "../DraggableComponents/Dashboard";
+
 export let initialData2 = {
   tasks: {
-    "task-1": { id: "task-1", content: "Take out the garbage" },
-    "task-2": { id: "task-2", content: "watch my favourite show" },
-    "task-3": { id: "task-3", content: "Charge my phone" },
-    "task-4": { id: "task-4", content: "Cook dinner" }
+    "task-1": { id: "task-1", content: FeatureSection() },
+    "task-2": { id: "task-2", content: HeroSections() },
+    "task-3": { id: "task-3", content: Avatars() },
+    "task-4": { id: "task-4", content: CTAsection() },
+    "task-5": { id: "task-5", content: Dashboard() }
   },
   columns: {
     "column-1": {
       id: "column-1",
       title: "Draggable Components",
-      taskIds: ["task-1", "task-2", "task-3", "task-4"]
+      taskIds: ["task-1", "task-2", ]
+      // taskIds: ["task-1", "task-2", "task-3", "task-4"]
     },
     "column-2": {
       id: "column-2",

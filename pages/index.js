@@ -8,13 +8,15 @@ import { DragDropContext } from "react-beautiful-dnd-next";
 import FileSaver from 'file-saver';
 import Canvas1 from '../components/DragLogic/Canvas1';
 import JSZip from 'jszip';
+import FeatureSection from '../components/DraggableComponents/FeatureSections';
 // import tailwindMinCss from "../node_modules/tailwindcss/dist/tailwind.min.css"
 const Home = () => {
   useEffect(() => {
     fetch("../static/tailwind.min.css").then(res => res.text())
-      .then(res => { console.log("res"); setMinCssFile(res) })
+      .then(res => {  setMinCssFile(res) })
   }, [])
   const [selectedOption, setSelectedOption] = useState("");
+  const [MouseOverMenu,setMouseOverMenu] = useState(false);
   const [clickedComponent, setClickedComponent] = useState("");
   const [FileName, setFileName] = useState("Index.html");
   const [minCssFile, setMinCssFile] = useState("Index.zip");
@@ -40,7 +42,7 @@ const Home = () => {
   const menuDetails = (selectedOption) => {
     switch (selectedOption) {
       case "Navigations":
-        return (<div> <Sample1 title="Navigations" /> <Sample2 /> </div>)
+        return <FeatureSection />
       case "Headers":
         return (<div> <Sample1 title="Headers" /> <Sample2 /> </div>)
       case "Contents":
@@ -70,7 +72,7 @@ const Home = () => {
   }
   
   const onDragEnd = result => {
-    console.log(result, "result 1");
+    // console.log(result, "result 1");
     const { destination, source, draggableId } = result;
     if (!destination) {
       console.log(" ! destination")
@@ -179,20 +181,32 @@ const Home = () => {
     )
   }
   function draggableComponnents() {
-    const column = initialData.columns["column-1"];
-    let tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
-    var arraytasks = Object.values(initialData.tasks);
-    var filteredTasks = column.taskIds.map((taskId) => {
-      var findTasks = arraytasks.find(tsk => {
+    if(selectedOption=="Navigations"){
+      const column = initialData.columns["column-1"];
+    var filteredTasks= [initialData.tasks["task-3"]]
+    return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+    }
+    if(selectedOption=="Headers"){
+      const column = initialData.columns["column-1"];
+    var filteredTasks= [initialData.tasks["task-4"]]
+    return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+    }
+    else{
+      const column = initialData.columns["column-1"];
+      // let tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
+      var arraytasks = Object.values(initialData.tasks);
+      var filteredTasks = column.taskIds.map((taskId) => {
+        var findTasks = arraytasks.find(tsk => {
         return (tsk.id == taskId)
       })
       return findTasks
     })
     return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
   }
+  }
   function canvas() {
     const column = canvasData.columns["column-2"];
-    const tasks = column.taskIds.map((taskId) => canvasData.tasks[taskId]);
+    // const tasks = column.taskIds.map((taskId) => canvasData.tasks[taskId]);
     var arraytasks = Object.values(canvasData.tasks);
     // const tasks =  arraytasks.forEach((tsk)=> {tsk.id == taskId  } ) ;
     var filteredTasks = column.taskIds.map((taskId) => {
@@ -201,12 +215,12 @@ const Home = () => {
       })
       return findTasks
     })
-    console.log("filter tasks ", filteredTasks)
-    console.log("canvas columns task Ids", column.taskIds)
+    // console.log("filter tasks ", filteredTasks)
+    // console.log("canvas columns task Ids", column.taskIds)
     return <Canvas1 key={column.id} column={column} tasks={filteredTasks} myData={sample} FileName={FileName} setFileName={setFileName} />;
   }
-  return <div className="bg-gray-100 h-screen " style={selectedOption ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
-    {selectedOption && <div className="bg-gray-900 z-10 absolute w-screen h-screen opacity-75" />}
+  return <div className="bg-gray-100 h-screen " style={MouseOverMenu ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}>
+    {MouseOverMenu && <div className="bg-gray-900 z-10 absolute w-screen h-screen opacity-75" />}
     {/* <div class="resize-x border  h-32 w-64 bg-gray-500 overflow-auto">s</div> */}
     <DragDropContext
 
@@ -214,9 +228,10 @@ const Home = () => {
         onDragEnd(result);
       }}
       onDragStart={(result) => {
-        console.log("ondrag start ", result);
+        // console.log("ondrag start ", result);
         setClickedComponent(result.source.droppableId);
-        setSelectedOption("")
+        // setSelectedOption("")
+        setMouseOverMenu(false)
       }}
     // onMouseDown={(a) => { console.log("on mouse donw", a) }}
     >
@@ -225,13 +240,13 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Nav /> */}
-      <div onMouseLeave={() => { setSelectedOption("") }} className="flex w-2/5" >
+      <div onMouseLeave={() => {  setMouseOverMenu(false)}} className="flex w-2/5" >
         <div className="flex" >
           <div className="flex flex-col bg-gray-100 h-screen z-20" >
             <div className=" border border-b-0 border-gray-400 bg-grey">
               <img src="/logo.png" className="w-32 m-6 " />
             </div>
-            <div className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{}}>
+            <div onMouseOver={()=> {setMouseOverMenu(true)}} className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{}}>
               {/* <a href="#" className="closebtn">&times;</a> */}
               <h4 href="#" className="text-gray-500 font-bold p-1 ml-8 text-lg "  >Base</h4>
               <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300 text-black" onMouseOver={() => { setSelectedOption("Navigations"); }}  >Navigations</a>
@@ -262,10 +277,10 @@ const Home = () => {
               <a href="#" className="p-1 text-lg ml-8  hover:bg-gray-300 no-underline">Pagination</a>
             </div>
           </div>
-          {<div className={selectedOption ? "bg-gray-100 h-screen z-10 w-3/4 " : "overflow-hidden w-0  "}>
+          {<div className={MouseOverMenu ? "bg-gray-100 h-screen z-10 overflow-scroll w-4/5" : "overflow-hidden w-0  "}>
             {/* {selectedOption && <div className=" bg-gray-100 h-screen z-10" > */}
             <div className="h-5 " />
-            {selectedOption && <h5 className="text-center text-grey-100 text-lg mt-5 mb-5">Select a component and drag it to the canvas</h5>}
+            {MouseOverMenu && <h5 className="text-center text-grey-100 text-lg mt-5 mb-5">Select a component and drag it to the canvas</h5>}
             {/* {menuDetails(selectedOption)} */}
             {<div > {draggableComponnents()}</div>}
             {/* {<div className={!selectedOption && "opacity-0"}> {draggableComponnents()}</div>} */}

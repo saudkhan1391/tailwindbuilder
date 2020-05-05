@@ -142,7 +142,8 @@ export default function Canvas1(props) {
                                                 {props.tasks.map((task, index) => {
                                                     if (Preview)
                                                         return (
-                                                            <Task key={task.id} task={task} index={index} myData={props.myData} Preview={Preview} reRender={reRender} render={render} ></Task>
+                                                            // <Task key={task.id} task={task} index={index} myData={props.myData} Preview={Preview} reRender={reRender} render={render} setTasks2Loaded={setTasks2Loaded} ></Task>
+                                                            <Tasks2 key={task.id} task={task} index={index} myData={props.myData} Preview={Preview} reRender={reRender} render={render} setTasks2Loaded={setTasks2Loaded} ></Tasks2>
                                                         )
                                                     else {
 
