@@ -11,17 +11,19 @@ import JSZip from 'jszip';
 import FeatureSection from '../components/DraggableComponents/FeatureSections';
 // import tailwindMinCss from "../node_modules/tailwindcss/dist/tailwind.min.css"
 const Home = () => {
-  useEffect(() => {
-    fetch("../static/tailwind.min.css").then(res => res.text())
-      .then(res => {  setMinCssFile(res) })
-  }, [])
   const [selectedOption, setSelectedOption] = useState("");
-  const [MouseOverMenu,setMouseOverMenu] = useState(false);
+  const [MouseOverMenu, setMouseOverMenu] = useState(false);
   const [clickedComponent, setClickedComponent] = useState("");
   const [FileName, setFileName] = useState("Index.html");
   const [minCssFile, setMinCssFile] = useState("Index.zip");
   const [initialData, setInitialData] = useState(initialData2);
   const [canvasData, setCanvasData] = useState(initialData2);
+  const [render, reRender] = useState(1);
+  useEffect(() => {
+    fetch("../static/tailwind.min.css").then(res => res.text())
+      .then(res => { setMinCssFile(res) });
+    reRender(render + 1);
+  }, [selectedOption])
   function download() {
     var pageHTML = window.document.getElementById('main-canvas').innerHTML;
     // let blob = new Blob([pageHTML], { type: 'data:attachment/text,' });
@@ -70,7 +72,7 @@ const Home = () => {
         return (<div>Null</div>)
     }
   }
-  
+
   const onDragEnd = result => {
     // console.log(result, "result 1");
     const { destination, source, draggableId } = result;
@@ -181,28 +183,62 @@ const Home = () => {
     )
   }
   function draggableComponnents() {
-    if(selectedOption=="Navigations"){
-      const column = initialData.columns["column-1"];
-    var filteredTasks= [initialData.tasks["task-3"]]
-    return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+    const column = initialData.columns["column-1"];
+    var filteredTasks = [];
+    switch (selectedOption) {
+      case "Navigations":
+        filteredTasks = [initialData.tasks["task-1"], initialData.tasks["task-2"]];
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Headers":
+        filteredTasks = [initialData.tasks["task-3"], initialData.tasks["task-4"]];
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Contents":
+        filteredTasks = [initialData.tasks["task-5"], initialData.tasks["task-6"]];
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Features":
+        filteredTasks = [initialData.tasks["task-7"], initialData.tasks["task-8"]]
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "How":
+        filteredTasks = [initialData.tasks["task-14"]]
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Testimonials":
+        filteredTasks = [initialData.tasks["task-11"], initialData.tasks["task-12"]]
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Portfolio":
+        filteredTasks = [initialData.tasks["task-13"], initialData.tasks["task-14"]]
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Team":
+        filteredTasks = [initialData.tasks["task-1"], initialData.tasks["task-2"]]
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Pricing":
+        filteredTasks = [initialData.tasks["task-3"], initialData.tasks["task-4"]];
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Facts":
+        filteredTasks = [initialData.tasks["task-5"], initialData.tasks["task-6"]];
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Contacts":
+        filteredTasks = [initialData.tasks["task-7"], initialData.tasks["task-8"]];
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      case "Footers":
+        filteredTasks = [initialData.tasks["task-10"]];
+        return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      // default:
+      // return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+      // filteredTasks = [initialData.tasks["task-4"], initialData.tasks["task-5"]]
     }
-    if(selectedOption=="Headers"){
-      const column = initialData.columns["column-1"];
-    var filteredTasks= [initialData.tasks["task-4"],initialData.tasks["task-5"]]
-    return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
-    }
-    else{
-      const column = initialData.columns["column-1"];
-      // let tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
-      var arraytasks = Object.values(initialData.tasks);
-      var filteredTasks = column.taskIds.map((taskId) => {
-        var findTasks = arraytasks.find(tsk => {
-        return (tsk.id == taskId)
-      })
-      return findTasks
-    })
-    return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
-  }
+    // return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+    //     else {
+    //   const column = initialData.columns["column-1"];
+    //   // let tasks = column.taskIds.map((taskId) => initialData.tasks[taskId]);
+    //   var arraytasks = Object.values(initialData.tasks);
+    //   var filteredTasks = column.taskIds.map((taskId) => {
+    //     var findTasks = arraytasks.find(tsk => {
+    //       return (tsk.id == taskId)
+    //     })
+    //     return findTasks
+    //   })
+    //   return <Column key={column.id} column={column} tasks={filteredTasks} myData={sample} />;
+    // }
   }
   function canvas() {
     const column = canvasData.columns["column-2"];
@@ -240,13 +276,13 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Nav /> */}
-      <div onMouseLeave={() => {  setMouseOverMenu(false)}} className="flex w-2/5" >
+      <div onMouseLeave={() => { setMouseOverMenu(false) }} className="flex w-2/5" >
         <div className="flex" >
           <div className="flex flex-col bg-gray-100 h-screen z-20" >
             <div className=" border border-b-0 border-gray-400 bg-grey">
               <img src="/logo.png" className="w-32 m-6 " />
             </div>
-            <div onMouseOver={()=> {setMouseOverMenu(true)}} className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{}}>
+            <div onMouseOver={() => { setMouseOverMenu(true) }} className="sidenav1  overflow-scroll border border-gray-400 flex flex-col " style={{}}>
               {/* <a href="#" className="closebtn">&times;</a> */}
               <h4 href="#" className="text-gray-500 font-bold p-1 ml-8 text-lg "  >Base</h4>
               <a href="#" className="p-1 text-lg ml-8 hover:bg-gray-300 no-underline duration-300 text-black" onMouseOver={() => { setSelectedOption("Navigations"); }}  >Navigations</a>
@@ -295,7 +331,7 @@ const Home = () => {
           </button>
         </div>
         {/* <div className="flex  flex-col " ref={(iref) => window.hyee = iref} id="abc" > */}
-          {canvas()}
+        {canvas()}
         {/* </div> */}
       </div>
     </DragDropContext>
