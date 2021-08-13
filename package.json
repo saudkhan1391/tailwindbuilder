@@ -12,7 +12,7 @@
     "@atlaskit/css-reset": "^5.0.10",
     "file-saver": "^2.0.2",
     "jszip": "^3.4.0",
-    "next": "9.3.5",
+    "next": "11.1.0",
     "react": "16.13.1",
     "react-beautiful-dnd-next": "^11.0.5",
     "react-copy-to-clipboard": "^5.0.2",
